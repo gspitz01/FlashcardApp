@@ -1,0 +1,48 @@
+package com.gregspitz.flashcardapp.flashcard;
+
+import android.support.test.rule.ActivityTestRule;
+import android.support.test.runner.AndroidJUnit4;
+
+import com.gregspitz.flashcardapp.R;
+import com.gregspitz.flashcardapp.data.FakeFlashcardRemoteDataSource;
+import com.gregspitz.flashcardapp.data.source.FlashcardRepository;
+import com.gregspitz.flashcardapp.flashcard.domain.model.Flashcard;
+
+import org.junit.Before;
+import org.junit.Rule;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+
+import static android.support.test.espresso.Espresso.onView;
+import static android.support.test.espresso.assertion.ViewAssertions.matches;
+import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
+import static android.support.test.espresso.matcher.ViewMatchers.withId;
+import static android.support.test.espresso.matcher.ViewMatchers.withText;
+
+/**
+ * Tests for the implementation of {@link FlashcardActivity}
+ */
+@RunWith(AndroidJUnit4.class)
+public class FlashcardActivityTest {
+    @Rule
+    public ActivityTestRule<FlashcardActivity> mActivityTestRule =
+            new ActivityTestRule<>(FlashcardActivity.class);
+
+    /**
+     * {@link Flashcard} stub that is added to the fake service layer
+     */
+    private static Flashcard FLASHCARD = new Flashcard("Some random front", "Some random back");
+
+    @Before
+    public void setup() {
+        FlashcardRepository.destroyInstance();
+        FakeFlashcardRemoteDataSource.getInstance().addFlashcards(FLASHCARD);
+    }
+
+    @Test
+    public void flashcardFront_displayedInUI() {
+        // TODO: figure out why this fails
+        onView(withId(R.id.flashcard_side_text)).check(matches(isDisplayed()));
+        onView(withId(R.id.flashcard_side_text)).check(matches(withText(FLASHCARD.getFront())));
+    }
+}
