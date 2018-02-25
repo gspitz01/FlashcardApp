@@ -60,4 +60,11 @@ public class UseCaseHandler {
             mUseCaseHandler.notifyError(mCallback);
         }
     }
+
+    public static UseCaseHandler getInstance() {
+        if (INSTANCE == null) {
+            INSTANCE = new UseCaseHandler(new UseCaseThreadPoolScheduler());
+        }
+        return INSTANCE;
+    }
 }
