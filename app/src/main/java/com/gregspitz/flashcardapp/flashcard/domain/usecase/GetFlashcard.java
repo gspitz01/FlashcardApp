@@ -27,7 +27,7 @@ public class GetFlashcard extends UseCase<GetFlashcard.RequestValues, GetFlashca
         mFlashcardRepository.getFlashcards(new FlashcardDataSource.GetFlashcardsCallback() {
             @Override
             public void onFlashcardsLoaded(List<Flashcard> flashcards) {
-                if (flashcards != null) {
+                if (flashcards != null && flashcards.size() > 0) {
                     getUseCaseCallback().onSuccess(
                             new ResponseValue(flashcards.get(
                                     mRandom.nextInt(flashcards.size()))));

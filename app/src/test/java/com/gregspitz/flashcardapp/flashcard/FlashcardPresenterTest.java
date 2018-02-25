@@ -1,5 +1,7 @@
-package com.gregspitz.flashcardapp;
+package com.gregspitz.flashcardapp.flashcard;
 
+import com.gregspitz.flashcardapp.TestUseCaseScheduler;
+import com.gregspitz.flashcardapp.UseCaseHandler;
 import com.gregspitz.flashcardapp.data.source.FlashcardDataSource;
 import com.gregspitz.flashcardapp.data.source.FlashcardRepository;
 import com.gregspitz.flashcardapp.flashcard.FlashcardContract;
@@ -26,8 +28,6 @@ import static org.mockito.Mockito.when;
  * Tests for the implementation of {@link FlashcardPresenter}
  */
 public class FlashcardPresenterTest {
-
-    // TODO: make more tests for this, specifically sad cases
 
     private static final Flashcard FLASHCARD = new Flashcard("This is the front", "This is the back");
 
@@ -57,21 +57,52 @@ public class FlashcardPresenterTest {
     }
 
     @Test
-    public void onStart_loadsAFlashcard() {
-        mFlashcardPresenter = createPresenter();
-        mFlashcardPresenter.start();
-
-        verify(mFlashcardRepository).getFlashcards(mCallbackArgumentCaptor.capture());
+    public void onStart_loadsAFlashcardAndShowFrontInView() {
+        createAndStartPresenterAndSetGetFlashcardsCallbackCaptor();
         InOrder inOrder = inOrder(mFlashcardView);
         inOrder.verify(mFlashcardView).setLoadingIndicator(true);
 
         //Trigger callback
-        List<Flashcard> cards = new ArrayList<>();
-        cards.add(FLASHCARD);
-        mCallbackArgumentCaptor.getValue().onFlashcardsLoaded(cards);
+        mCallbackArgumentCaptor.getValue().onFlashcardsLoaded(
+                addTestCardToListAndReturnList());
 
         inOrder.verify(mFlashcardView).setLoadingIndicator(false);
-        verify(mFlashcardView).showFlashcardFront(FLASHCARD);
+        verify(mFlashcardView).showFlashcardSide(FLASHCARD.getFront());
+    }
+
+    @Test
+    public void turnFlashcard_showsBackInView() {
+        createAndStartPresenterAndSetGetFlashcardsCallbackCaptor();
+        mCallbackArgumentCaptor.getValue().onFlashcardsLoaded(
+                addTestCardToListAndReturnList());
+        mFlashcardPresenter.turnFlashcard();
+        verify(mFlashcardView).showFlashcardSide(FLASHCARD.getBack());
+    }
+
+    @Test
+    public void noFlashcardsToLoad_showsFailedToLoadInView() {
+        createAndStartPresenterAndSetGetFlashcardsCallbackCaptor();
+        mCallbackArgumentCaptor.getValue().onDataNotAvailable();
+        verify(mFlashcardView).showFailedToLoadFlashcard();
+    }
+
+    @Test
+    public void emptyListOfFlashcards_showsFailedToLoadInView() {
+        createAndStartPresenterAndSetGetFlashcardsCallbackCaptor();
+        mCallbackArgumentCaptor.getValue().onFlashcardsLoaded(new ArrayList<Flashcard>());
+        verify(mFlashcardView).showFailedToLoadFlashcard();
+    }
+
+    private void createAndStartPresenterAndSetGetFlashcardsCallbackCaptor() {
+        mFlashcardPresenter = createPresenter();
+        mFlashcardPresenter.start();
+        verify(mFlashcardRepository).getFlashcards(mCallbackArgumentCaptor.capture());
+    }
+
+    private List<Flashcard> addTestCardToListAndReturnList() {
+        List<Flashcard> cards = new ArrayList<>();
+        cards.add(FLASHCARD);
+        return cards;
     }
 
     private FlashcardPresenter createPresenter() {

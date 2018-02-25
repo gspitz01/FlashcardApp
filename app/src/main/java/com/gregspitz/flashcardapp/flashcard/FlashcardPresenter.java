@@ -17,6 +17,7 @@ public class FlashcardPresenter implements FlashcardContract.Presenter {
     private final FlashcardContract.View mView;
     private final GetFlashcard mGetFlashcard;
     private Flashcard mCurrentFlashcard;
+    private boolean mShowingFront;
 
     public FlashcardPresenter(@NonNull UseCaseHandler useCaseHandler,
                               @NonNull FlashcardContract.View view,
@@ -24,12 +25,18 @@ public class FlashcardPresenter implements FlashcardContract.Presenter {
         mUseCaseHandler = useCaseHandler;
         mView = view;
         mGetFlashcard = getFlashcard;
+        mShowingFront = false;
         mView.setPresenter(this);
     }
 
     @Override
     public void turnFlashcard() {
-
+        String sideToShow = mCurrentFlashcard.getFront();
+        if (mShowingFront) {
+            sideToShow = mCurrentFlashcard.getBack();
+        }
+        mView.showFlashcardSide(sideToShow);
+        mShowingFront = !mShowingFront;
     }
 
     @Override
@@ -43,7 +50,8 @@ public class FlashcardPresenter implements FlashcardContract.Presenter {
                         mCurrentFlashcard = response.getFlashcard();
                         if (mView.isActive()) {
                             mView.setLoadingIndicator(false);
-                            mView.showFlashcardFront(mCurrentFlashcard);
+                            mView.showFlashcardSide(mCurrentFlashcard.getFront());
+                            mShowingFront = true;
                         }
                     }
 
