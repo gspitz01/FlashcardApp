@@ -7,8 +7,25 @@ import android.support.annotation.NonNull;
  */
 
 public class FlashcardRepository implements FlashcardDataSource {
+
+    private static FlashcardRepository INSTANCE;
+
+    private final FlashcardDataSource mRemoteDataService;
+
+    // Prevent direct instantiation
+    private FlashcardRepository(@NonNull FlashcardDataSource remoteDataService) {
+        mRemoteDataService = remoteDataService;
+    }
+
+    public static FlashcardRepository getInstance(FlashcardDataSource remoteDataService) {
+        if (INSTANCE == null) {
+            INSTANCE = new FlashcardRepository(remoteDataService);
+        }
+        return INSTANCE;
+    }
+
     @Override
     public void getFlashcards(@NonNull GetFlashcardsCallback callback) {
-        // TODO: implement this
+        mRemoteDataService.getFlashcards(callback);
     }
 }
