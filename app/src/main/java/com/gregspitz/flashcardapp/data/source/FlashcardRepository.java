@@ -24,6 +24,10 @@ public class FlashcardRepository implements FlashcardDataSource {
         return INSTANCE;
     }
 
+    public static void destroyInstance() {
+        INSTANCE = null;
+    }
+
     @Override
     public void getFlashcards(@NonNull GetFlashcardsCallback callback) {
         mRemoteDataService.getFlashcards(callback);

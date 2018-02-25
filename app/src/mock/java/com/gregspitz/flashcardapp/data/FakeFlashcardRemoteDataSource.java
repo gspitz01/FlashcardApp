@@ -1,6 +1,7 @@
 package com.gregspitz.flashcardapp.data;
 
 import android.support.annotation.NonNull;
+import android.support.annotation.VisibleForTesting;
 
 import com.google.common.collect.Lists;
 import com.gregspitz.flashcardapp.data.source.FlashcardDataSource;
@@ -32,5 +33,12 @@ public class FakeFlashcardRemoteDataSource implements FlashcardDataSource {
     @Override
     public void getFlashcards(@NonNull GetFlashcardsCallback callback) {
         callback.onFlashcardsLoaded(Lists.newArrayList(FLASHCARD_SERVICE_DATA.values()));
+    }
+
+    @VisibleForTesting
+    public void addFlashcards(Flashcard... flashcards) {
+        for (Flashcard flashcard : flashcards) {
+            FLASHCARD_SERVICE_DATA.put(flashcard.getId(), flashcard);
+        }
     }
 }
