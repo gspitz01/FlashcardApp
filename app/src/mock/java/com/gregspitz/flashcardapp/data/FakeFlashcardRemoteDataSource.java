@@ -2,6 +2,7 @@ package com.gregspitz.flashcardapp.data;
 
 import android.support.annotation.NonNull;
 import android.support.annotation.VisibleForTesting;
+import android.util.Log;
 
 import com.google.common.collect.Lists;
 import com.gregspitz.flashcardapp.data.source.FlashcardDataSource;

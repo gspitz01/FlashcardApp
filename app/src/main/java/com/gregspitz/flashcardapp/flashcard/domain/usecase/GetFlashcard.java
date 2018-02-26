@@ -1,5 +1,7 @@
 package com.gregspitz.flashcardapp.flashcard.domain.usecase;
 
+import android.util.Log;
+
 import com.gregspitz.flashcardapp.UseCase;
 import com.gregspitz.flashcardapp.data.source.FlashcardDataSource;
 import com.gregspitz.flashcardapp.data.source.FlashcardRepository;

@@ -1,6 +1,7 @@
 package com.gregspitz.flashcardapp.flashcard;
 
 import android.support.annotation.NonNull;
+import android.util.Log;
 
 import com.gregspitz.flashcardapp.UseCase;
 import com.gregspitz.flashcardapp.UseCaseHandler;
