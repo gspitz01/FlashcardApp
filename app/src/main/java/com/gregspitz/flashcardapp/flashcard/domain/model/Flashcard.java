@@ -6,31 +6,46 @@ import java.util.UUID;
  * An immutable text flashcard with a front and a back
  */
 public class Flashcard {
-    private String mId;
-    private String mFront;
-    private String mBack;
+    private String id;
+    private String front;
+    private String back;
 
     public Flashcard(String front, String back) {
-        mId = UUID.randomUUID().toString();
-        mFront = front;
-        mBack = back;
+        this(UUID.randomUUID().toString(), front, back);
     }
 
     public Flashcard(String id, String front, String back) {
-        mId = id;
-        mFront = front;
-        mBack = back;
+        this.id = id;
+        this.front = front;
+        this.back = back;
     }
 
     public String getId() {
-        return mId;
+        return id;
     }
 
     public String getFront() {
-        return mFront;
+        return front;
     }
 
     public String getBack() {
-        return mBack;
+        return back;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (obj == this) {
+            return true;
+        }
+        if (obj.getClass() != Flashcard.class) {
+            return false;
+        }
+        Flashcard otherCard = (Flashcard) obj;
+        return otherCard.getId().equals(getId()) &&
+                otherCard.getFront().equals(getFront()) &&
+                otherCard.getBack().equals(getBack());
     }
 }

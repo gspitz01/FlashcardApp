@@ -59,7 +59,7 @@ public class FlashcardActivity extends AppCompatActivity implements FlashcardCon
 
     @Override
     public void showFailedToLoadFlashcard() {
-
+        mFlashcardSideText.setText(R.string.unable_to_load_flashcard_text);
     }
 
     @Override

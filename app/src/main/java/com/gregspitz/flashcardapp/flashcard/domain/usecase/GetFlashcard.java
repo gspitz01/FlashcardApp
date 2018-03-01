@@ -30,9 +30,9 @@ public class GetFlashcard extends UseCase<GetFlashcard.RequestValues, GetFlashca
             @Override
             public void onFlashcardsLoaded(List<Flashcard> flashcards) {
                 if (flashcards != null && flashcards.size() > 0) {
+                    int randInt = mRandom.nextInt(flashcards.size());
                     getUseCaseCallback().onSuccess(
-                            new ResponseValue(flashcards.get(
-                                    mRandom.nextInt(flashcards.size()))));
+                            new ResponseValue(flashcards.get(randInt)));
                 } else {
                     getUseCaseCallback().onError();
                 }
