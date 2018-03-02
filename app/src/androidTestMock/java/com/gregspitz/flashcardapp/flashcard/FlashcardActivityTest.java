@@ -45,14 +45,14 @@ public class FlashcardActivityTest {
     @Test
     public void flashcardFront_displayedInUI() {
         mActivityTestRule.launchActivity(new Intent());
-        onView(withId(R.id.flashcard_side_text)).check(matches(withText(FLASHCARD.getFront())));
+        onView(withId(R.id.flashcard_view)).check(matches(withText(FLASHCARD.getFront())));
     }
 
     @Test
     public void clickFlashcard_displaysBackOfCardInUI() {
         mActivityTestRule.launchActivity(new Intent());
-        onView(withId(R.id.flashcard_side_text)).perform(click());
-        onView(withId(R.id.flashcard_side_text)).check(matches(withText(FLASHCARD.getBack())));
+        onView(withId(R.id.flashcard_view)).perform(click());
+        onView(withId(R.id.flashcard_view)).check(matches(withText(FLASHCARD.getBack())));
     }
 
     @Test
