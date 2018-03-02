@@ -5,23 +5,24 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.TextView;
+import android.widget.ProgressBar;
 
-import com.gregspitz.flashcardapp.BasePresenter;
 import com.gregspitz.flashcardapp.Injection;
 import com.gregspitz.flashcardapp.R;
 
 public class FlashcardActivity extends AppCompatActivity implements FlashcardContract.View {
 
-    private TextView mFlashcardSideText;
+    private FlashcardView mFlashcardView;
     private FlashcardContract.Presenter mPresenter;
+    private ProgressBar mProgressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_flashcard);
-        mFlashcardSideText = findViewById(R.id.flashcard_side_text);
-        mFlashcardSideText.setOnClickListener(new View.OnClickListener() {
+        mProgressBar = findViewById(R.id.progress_bar);
+        mFlashcardView = findViewById(R.id.flashcard_view);
+        mFlashcardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 mPresenter.turnFlashcard();
@@ -49,17 +50,21 @@ public class FlashcardActivity extends AppCompatActivity implements FlashcardCon
 
     @Override
     public void setLoadingIndicator(boolean active) {
-
+        if (active) {
+            mProgressBar.setVisibility(View.VISIBLE);
+        } else {
+            mProgressBar.setVisibility(View.GONE);
+        }
     }
 
     @Override
     public void showFlashcardSide(String flashcardSide) {
-        mFlashcardSideText.setText(flashcardSide);
+        mFlashcardView.setText(flashcardSide);
     }
 
     @Override
     public void showFailedToLoadFlashcard() {
-        mFlashcardSideText.setText(R.string.unable_to_load_flashcard_text);
+        mFlashcardView.setText(R.string.unable_to_load_flashcard_text);
     }
 
     @Override

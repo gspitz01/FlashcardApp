@@ -8,4 +8,16 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <style name="FlashcardView">
+        <item name="android:fontFamily">sans-serif</item>
+        <item name="android:textSize">18sp</item>
+        <item name="android:textColor">@color/darkGray</item>
+        <item name="android:background">@drawable/flashcard_background</item>
+    </style>
+
+    <style name="FlashcardButton">
+        <item name="android:textColor">@color/button_text_color_selector</item>
+
+    </style>
+
 </resources>
