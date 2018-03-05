@@ -19,5 +19,13 @@ public interface FlashcardDataSource {
         void onDataNotAvailable();
     }
 
+    interface GetFlashcardCallback {
+        void onFlashcardLoaded(Flashcard flashcard);
+
+        void onDataNotAvailable();
+    }
+
     void getFlashcards(@NonNull GetFlashcardsCallback callback);
+
+    void getFlashcard(@NonNull String flashcardId, @NonNull GetFlashcardCallback callback);
 }

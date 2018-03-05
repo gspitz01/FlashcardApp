@@ -32,4 +32,9 @@ public class FlashcardRepository implements FlashcardDataSource {
     public void getFlashcards(@NonNull GetFlashcardsCallback callback) {
         mRemoteDataService.getFlashcards(callback);
     }
+
+    @Override
+    public void getFlashcard(@NonNull String flashcardId, @NonNull GetFlashcardCallback callback) {
+        mRemoteDataService.getFlashcard(flashcardId, callback);
+    }
 }

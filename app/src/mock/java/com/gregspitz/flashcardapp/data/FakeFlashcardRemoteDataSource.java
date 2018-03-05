@@ -35,6 +35,11 @@ public class FakeFlashcardRemoteDataSource implements FlashcardDataSource {
         callback.onFlashcardsLoaded(Lists.newArrayList(FLASHCARD_SERVICE_DATA.values()));
     }
 
+    @Override
+    public void getFlashcard(@NonNull String flashcardId, @NonNull GetFlashcardCallback callback) {
+        callback.onFlashcardLoaded(FLASHCARD_SERVICE_DATA.get(flashcardId));
+    }
+
     @VisibleForTesting
     public void addFlashcards(Flashcard... flashcards) {
         for (Flashcard flashcard : flashcards) {

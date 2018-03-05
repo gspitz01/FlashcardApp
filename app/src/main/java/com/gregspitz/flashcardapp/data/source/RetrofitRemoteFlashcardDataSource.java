@@ -47,4 +47,9 @@ public class RetrofitRemoteFlashcardDataSource implements FlashcardDataSource {
             }
         });
     }
+
+    @Override
+    public void getFlashcard(@NonNull String flashcardId, @NonNull GetFlashcardCallback callback) {
+        // TODO: fill this in
+    }
 }

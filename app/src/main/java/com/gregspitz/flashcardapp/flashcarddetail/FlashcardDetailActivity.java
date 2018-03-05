@@ -25,8 +25,29 @@ public class FlashcardDetailActivity extends AppCompatActivity
     }
 
     @Override
-    public void showFlashcard(Flashcard flashcard) {
+    public void showLoadingIndicator(boolean active) {
+        // TODO: implement
+    }
 
+    @Override
+    public void showFlashcard(Flashcard flashcard) {
+        // TODO: implement
+    }
+
+    @Override
+    public void showEditFlashcard(String flashcardId) {
+        // TODO: implement
+    }
+
+    @Override
+    public void showFailedToLoadFlashcard() {
+        // TODO: implement and test
+    }
+
+    @Override
+    public String getIdFromIntent() {
+        // TODO: implement and test
+        return null;
     }
 
     @Override

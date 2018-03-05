@@ -9,13 +9,18 @@ import com.gregspitz.flashcardapp.randomflashcard.domain.model.Flashcard;
  */
 
 public interface FlashcardDetailContract {
-    // TODO: fill this out and make tests and a presenter
+
     interface View extends BaseView<Presenter> {
+        void showLoadingIndicator(boolean active);
         void showFlashcard(Flashcard flashcard);
+        void showEditFlashcard(String flashcardId);
+        void showFailedToLoadFlashcard();
+        String getIdFromIntent();
         boolean isActive();
     }
 
     interface Presenter extends BasePresenter {
         void loadFlashcard(String flashcardId);
+        void editFlashcard();
     }
 }
