@@ -25,5 +25,6 @@ public interface FlashcardListContract {
         void selectFlashcard(Flashcard flashcard);
         void addFlashcard();
         void loadFlashcards();
+        void onFlashcardClick(String flashcardId);
     }
 }

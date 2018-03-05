@@ -62,4 +62,9 @@ public class FlashcardListPresenter implements FlashcardListContract.Presenter {
                     }
                 });
     }
+
+    @Override
+    public void onFlashcardClick(String flashcardId) {
+        mView.showFlashcardDetailsUi(flashcardId);
+    }
 }

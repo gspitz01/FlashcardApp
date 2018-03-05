@@ -20,7 +20,7 @@ public class FlashcardRecyclerAdapter
         extends RecyclerView.Adapter<FlashcardRecyclerAdapter.FlashcardViewHolder> {
 
     private List<Flashcard> mFlashcards;
-    private FlashcardClickListener mFlashcardClickListener;
+    private FlashcardListContract.Presenter mPresenter;
 
     public FlashcardRecyclerAdapter(ArrayList<Flashcard> flashcards) {
         mFlashcards = flashcards;
@@ -48,8 +48,8 @@ public class FlashcardRecyclerAdapter
         notifyDataSetChanged();
     }
 
-    public void setFlashcardClickListener(FlashcardClickListener listener) {
-        mFlashcardClickListener = listener;
+    public void setPresenter(FlashcardListContract.Presenter presenter) {
+        mPresenter = presenter;
     }
 
     class FlashcardViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
@@ -68,8 +68,8 @@ public class FlashcardRecyclerAdapter
 
         @Override
         public void onClick(View v) {
-            if (mFlashcardClickListener != null) {
-                mFlashcardClickListener.onClick(mFlashcards.get(getAdapterPosition()).getId());
+            if (mPresenter != null) {
+                mPresenter.onFlashcardClick(mFlashcards.get(getAdapterPosition()).getId());
             }
         }
     }
