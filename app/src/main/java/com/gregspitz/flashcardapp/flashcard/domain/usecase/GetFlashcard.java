@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.Random;
 
 /**
- * A use case for getting a single flashcard
+ * A use case for getting a single random flashcard
  */
 
 public class GetFlashcard extends UseCase<GetFlashcard.RequestValues, GetFlashcard.ResponseValue> {
