@@ -42,4 +42,9 @@ public class FakeFlashcardRemoteDataSource implements FlashcardDataSource {
             FLASHCARD_SERVICE_DATA.put(flashcard.getId(), flashcard);
         }
     }
+
+    @VisibleForTesting
+    public void clearFlashcards() {
+        FLASHCARD_SERVICE_DATA.clear();
+    }
 }

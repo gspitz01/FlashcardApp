@@ -6,6 +6,7 @@ import android.support.annotation.NonNull;
 import com.gregspitz.flashcardapp.data.FakeFlashcardRemoteDataSource;
 import com.gregspitz.flashcardapp.data.source.FlashcardRepository;
 import com.gregspitz.flashcardapp.flashcard.domain.usecase.GetFlashcard;
+import com.gregspitz.flashcardapp.flashcardlist.domain.usecase.GetFlashcards;
 
 /**
  * Enables injection of mock implementations for
@@ -25,5 +26,9 @@ public class Injection {
 
     public static GetFlashcard provideGetFlashcard(@NonNull Context context) {
         return new GetFlashcard(provideFlashcardRepository(context));
+    }
+
+    public static GetFlashcards provideGetFlashcards(@NonNull Context context) {
+        return new GetFlashcards(provideFlashcardRepository(context));
     }
 }
