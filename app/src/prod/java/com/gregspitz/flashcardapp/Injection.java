@@ -5,7 +5,7 @@ import android.support.annotation.NonNull;
 
 import com.gregspitz.flashcardapp.data.source.FlashcardRepository;
 import com.gregspitz.flashcardapp.data.source.RetrofitRemoteFlashcardDataSource;
-import com.gregspitz.flashcardapp.flashcard.domain.usecase.GetFlashcard;
+import com.gregspitz.flashcardapp.randomflashcard.domain.usecase.GetFlashcard;
 
 /**
  * Production injection

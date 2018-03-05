@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.gregspitz.flashcardapp.flashcard.FlashcardActivity">
+    tools:context="com.gregspitz.flashcardapp.randomflashcard.FlashcardActivity">
 
     <ProgressBar
         android:id="@+id/progress_bar"
@@ -20,7 +20,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"/>
 
-    <com.gregspitz.flashcardapp.flashcard.FlashcardView
+    <com.gregspitz.flashcardapp.randomflashcard.FlashcardView
         android:id="@+id/flashcard_view"
         style="@style/FlashcardView"
         android:layout_width="match_parent"

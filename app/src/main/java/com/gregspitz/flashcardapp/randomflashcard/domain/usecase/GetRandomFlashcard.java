@@ -1,4 +1,4 @@
-package com.gregspitz.flashcardapp.flashcardlist.domain.usecase;
+package com.gregspitz.flashcardapp.randomflashcard.domain.usecase;
 
 import com.gregspitz.flashcardapp.UseCase;
 import com.gregspitz.flashcardapp.data.source.FlashcardDataSource;
@@ -6,17 +6,20 @@ import com.gregspitz.flashcardapp.data.source.FlashcardRepository;
 import com.gregspitz.flashcardapp.randomflashcard.domain.model.Flashcard;
 
 import java.util.List;
+import java.util.Random;
 
 /**
- * A use case for retrieving all available flashcards
+ * A use case for getting a single random flashcard
  */
 
-public class GetFlashcards extends UseCase<GetFlashcards.RequestValues, GetFlashcards.ResponseValue> {
+public class GetRandomFlashcard extends UseCase<GetRandomFlashcard.RequestValues, GetRandomFlashcard.ResponseValue> {
 
     private FlashcardRepository mFlashcardRepository;
+    private Random mRandom;
 
-    public GetFlashcards(FlashcardRepository flashcardRepository) {
+    public GetRandomFlashcard(FlashcardRepository flashcardRepository) {
         mFlashcardRepository = flashcardRepository;
+        mRandom = new Random();
     }
 
     @Override
@@ -24,8 +27,10 @@ public class GetFlashcards extends UseCase<GetFlashcards.RequestValues, GetFlash
         mFlashcardRepository.getFlashcards(new FlashcardDataSource.GetFlashcardsCallback() {
             @Override
             public void onFlashcardsLoaded(List<Flashcard> flashcards) {
-                if (flashcards.size() > 0) {
-                    getUseCaseCallback().onSuccess(new ResponseValue(flashcards));
+                if (flashcards != null && flashcards.size() > 0) {
+                    int randInt = mRandom.nextInt(flashcards.size());
+                    getUseCaseCallback().onSuccess(
+                            new ResponseValue(flashcards.get(randInt)));
                 } else {
                     getUseCaseCallback().onError();
                 }
@@ -41,14 +46,14 @@ public class GetFlashcards extends UseCase<GetFlashcards.RequestValues, GetFlash
     public static final class RequestValues implements UseCase.RequestValues {}
 
     public static final class ResponseValue implements UseCase.ResponseValue {
-        private List<Flashcard> mFlashcards;
+        private Flashcard mFlashcard;
 
-        public ResponseValue(List<Flashcard> flashcards) {
-            mFlashcards = flashcards;
+        public ResponseValue(Flashcard flashcard) {
+            mFlashcard = flashcard;
         }
 
-        public List<Flashcard> getFlashcards() {
-            return mFlashcards;
+        public Flashcard getFlashcard() {
+            return mFlashcard;
         }
     }
 }

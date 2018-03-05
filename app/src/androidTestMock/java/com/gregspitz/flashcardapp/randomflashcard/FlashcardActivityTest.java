@@ -1,4 +1,4 @@
-package com.gregspitz.flashcardapp.flashcard;
+package com.gregspitz.flashcardapp.randomflashcard;
 
 import android.content.Intent;
 import android.support.test.rule.ActivityTestRule;
@@ -7,7 +7,7 @@ import android.support.test.runner.AndroidJUnit4;
 import com.gregspitz.flashcardapp.R;
 import com.gregspitz.flashcardapp.data.FakeFlashcardRemoteDataSource;
 import com.gregspitz.flashcardapp.data.source.FlashcardRepository;
-import com.gregspitz.flashcardapp.flashcard.domain.model.Flashcard;
+import com.gregspitz.flashcardapp.randomflashcard.domain.model.Flashcard;
 
 import org.junit.Before;
 import org.junit.Rule;

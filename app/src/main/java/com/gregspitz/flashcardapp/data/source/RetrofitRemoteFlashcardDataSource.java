@@ -4,7 +4,7 @@ import android.support.annotation.NonNull;
 
 import com.gregspitz.flashcardapp.data.services.FlashcardService;
 import com.gregspitz.flashcardapp.data.services.ServiceBuilder;
-import com.gregspitz.flashcardapp.flashcard.domain.model.Flashcard;
+import com.gregspitz.flashcardapp.randomflashcard.domain.model.Flashcard;
 
 import java.util.List;
 

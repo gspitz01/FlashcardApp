@@ -1,12 +1,11 @@
-package com.gregspitz.flashcardapp.flashcard;
+package com.gregspitz.flashcardapp.randomflashcard;
 
 import android.support.annotation.NonNull;
-import android.util.Log;
 
 import com.gregspitz.flashcardapp.UseCase;
 import com.gregspitz.flashcardapp.UseCaseHandler;
-import com.gregspitz.flashcardapp.flashcard.domain.model.Flashcard;
-import com.gregspitz.flashcardapp.flashcard.domain.usecase.GetFlashcard;
+import com.gregspitz.flashcardapp.randomflashcard.domain.model.Flashcard;
+import com.gregspitz.flashcardapp.randomflashcard.domain.usecase.GetRandomFlashcard;
 
 /**
  * Presenter of flashcards
@@ -16,16 +15,16 @@ public class FlashcardPresenter implements FlashcardContract.Presenter {
 
     private final UseCaseHandler mUseCaseHandler;
     private final FlashcardContract.View mView;
-    private final GetFlashcard mGetFlashcard;
+    private final GetRandomFlashcard mGetRandomFlashcard;
     private Flashcard mCurrentFlashcard;
     private boolean mShowingFront;
 
     public FlashcardPresenter(@NonNull UseCaseHandler useCaseHandler,
                               @NonNull FlashcardContract.View view,
-                              @NonNull GetFlashcard getFlashcard) {
+                              @NonNull GetRandomFlashcard getRandomFlashcard) {
         mUseCaseHandler = useCaseHandler;
         mView = view;
-        mGetFlashcard = getFlashcard;
+        mGetRandomFlashcard = getRandomFlashcard;
         mShowingFront = false;
         mView.setPresenter(this);
     }
@@ -44,10 +43,10 @@ public class FlashcardPresenter implements FlashcardContract.Presenter {
     public void loadNewFlashcard() {
         mView.setLoadingIndicator(true);
 
-        mUseCaseHandler.execute(mGetFlashcard, new GetFlashcard.RequestValues(),
-                new UseCase.UseCaseCallback<GetFlashcard.ResponseValue>() {
+        mUseCaseHandler.execute(mGetRandomFlashcard, new GetRandomFlashcard.RequestValues(),
+                new UseCase.UseCaseCallback<GetRandomFlashcard.ResponseValue>() {
                     @Override
-                    public void onSuccess(GetFlashcard.ResponseValue response) {
+                    public void onSuccess(GetRandomFlashcard.ResponseValue response) {
                         mCurrentFlashcard = response.getFlashcard();
                         if (mView.isActive()) {
                             mView.setLoadingIndicator(false);

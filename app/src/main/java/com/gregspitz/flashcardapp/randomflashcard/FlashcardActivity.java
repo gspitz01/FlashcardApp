@@ -1,4 +1,4 @@
-package com.gregspitz.flashcardapp.flashcard;
+package com.gregspitz.flashcardapp.randomflashcard;
 
 import android.support.annotation.VisibleForTesting;
 import android.support.v7.app.AppCompatActivity;

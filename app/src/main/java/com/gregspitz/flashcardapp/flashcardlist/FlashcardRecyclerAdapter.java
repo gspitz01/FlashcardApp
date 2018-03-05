@@ -7,7 +7,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.gregspitz.flashcardapp.R;
-import com.gregspitz.flashcardapp.flashcard.domain.model.Flashcard;
+import com.gregspitz.flashcardapp.randomflashcard.domain.model.Flashcard;
 
 import java.util.ArrayList;
 import java.util.List;

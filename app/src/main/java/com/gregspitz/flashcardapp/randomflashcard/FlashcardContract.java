@@ -1,4 +1,4 @@
-package com.gregspitz.flashcardapp.flashcard;
+package com.gregspitz.flashcardapp.randomflashcard;
 
 import com.gregspitz.flashcardapp.BasePresenter;
 import com.gregspitz.flashcardapp.BaseView;

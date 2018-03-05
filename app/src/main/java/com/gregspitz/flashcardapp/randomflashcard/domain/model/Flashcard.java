@@ -1,4 +1,4 @@
-package com.gregspitz.flashcardapp.flashcard.domain.model;
+package com.gregspitz.flashcardapp.randomflashcard.domain.model;
 
 import java.util.UUID;
 

@@ -1,13 +1,11 @@
-package com.gregspitz.flashcardapp.flashcard;
+package com.gregspitz.flashcardapp.randomflashcard;
 
 import com.gregspitz.flashcardapp.TestUseCaseScheduler;
 import com.gregspitz.flashcardapp.UseCaseHandler;
 import com.gregspitz.flashcardapp.data.source.FlashcardDataSource;
 import com.gregspitz.flashcardapp.data.source.FlashcardRepository;
-import com.gregspitz.flashcardapp.flashcard.FlashcardContract;
-import com.gregspitz.flashcardapp.flashcard.FlashcardPresenter;
-import com.gregspitz.flashcardapp.flashcard.domain.model.Flashcard;
-import com.gregspitz.flashcardapp.flashcard.domain.usecase.GetFlashcard;
+import com.gregspitz.flashcardapp.randomflashcard.domain.model.Flashcard;
+import com.gregspitz.flashcardapp.randomflashcard.domain.usecase.GetRandomFlashcard;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -107,7 +105,7 @@ public class FlashcardPresenterTest {
 
     private FlashcardPresenter createPresenter() {
         UseCaseHandler useCaseHandler = new UseCaseHandler(new TestUseCaseScheduler());
-        GetFlashcard getFlashCard = new GetFlashcard(mFlashcardRepository);
-        return new FlashcardPresenter(useCaseHandler, mFlashcardView, getFlashCard);
+        GetRandomFlashcard getRandomFlashCard = new GetRandomFlashcard(mFlashcardRepository);
+        return new FlashcardPresenter(useCaseHandler, mFlashcardView, getRandomFlashCard);
     }
 }

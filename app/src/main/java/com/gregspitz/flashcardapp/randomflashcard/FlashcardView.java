@@ -1,4 +1,4 @@
-package com.gregspitz.flashcardapp.flashcard;
+package com.gregspitz.flashcardapp.randomflashcard;
 
 import android.content.Context;
 import android.support.annotation.Nullable;

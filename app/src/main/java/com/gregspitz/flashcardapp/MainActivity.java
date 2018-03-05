@@ -6,7 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
-import com.gregspitz.flashcardapp.flashcard.FlashcardActivity;
+import com.gregspitz.flashcardapp.randomflashcard.FlashcardActivity;
 
 public class MainActivity extends AppCompatActivity {
 

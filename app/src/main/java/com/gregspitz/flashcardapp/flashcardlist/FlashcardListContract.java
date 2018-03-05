@@ -2,7 +2,7 @@ package com.gregspitz.flashcardapp.flashcardlist;
 
 import com.gregspitz.flashcardapp.BasePresenter;
 import com.gregspitz.flashcardapp.BaseView;
-import com.gregspitz.flashcardapp.flashcard.domain.model.Flashcard;
+import com.gregspitz.flashcardapp.randomflashcard.domain.model.Flashcard;
 
 import java.util.List;
 
