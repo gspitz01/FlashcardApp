@@ -48,7 +48,9 @@ install: skip
 #   global:
 #     - PATH=/usr/local/android-sdk/tools/bin:$PATH
 
-script: skip
+script:
+  - ./gradlew build jacocoTestReport assembleAndroidTest
+  - ./gradlew connectedCheck
 # android:
 #   components:
 #     - tools
@@ -99,3 +101,5 @@ notifications:
   #  template:
   #    - "Build <%{build_url}|#%{build_number}> (<%{compare_url}|%{commit}>) of %{repository}@%{branch} by %{author} %{result} in %{duration} (elapsed time: %{elapsed_time}) subject: %{commit_subject} message: %{commit_message} foobar"
   #  on_success: always
+after_success:
+  - bash <(curl -s https://codecov.io/bash)
