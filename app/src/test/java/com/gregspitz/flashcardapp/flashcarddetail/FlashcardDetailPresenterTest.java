@@ -43,8 +43,9 @@ public class FlashcardDetailPresenterTest {
     @Before
     public void setup() {
         MockitoAnnotations.initMocks(this);
-
+        // View always appears active
         when(mView.isActive()).thenReturn(true);
+        // View acts as though it was started with an intent which included the flashcard ID
         when(mView.getIdFromIntent()).thenReturn(FLASHCARD.getId());
     }
 

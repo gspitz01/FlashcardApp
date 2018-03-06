@@ -51,7 +51,7 @@ public class FlashcardListPresenterTest {
     @Before
     public void setup() {
         MockitoAnnotations.initMocks(this);
-
+        // View always appears active
         when(mFlashcardListView.isActive()).thenReturn(true);
     }
 
@@ -67,6 +67,7 @@ public class FlashcardListPresenterTest {
         createAndStartPresenterAndSetGetFlashcardsCallbackCaptor();
         InOrder inOrder = inOrder(mFlashcardListView);
         inOrder.verify(mFlashcardListView).setLoadingIndicator(true);
+        // Trigger callback with list of Flashcards
         mCallbackArgumentCaptor.getValue().onFlashcardsLoaded(
                 createAndReturnTestCardsList());
         inOrder.verify(mFlashcardListView).setLoadingIndicator(false);

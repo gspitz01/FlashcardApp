@@ -53,7 +53,9 @@ public class AddEditFlashcardPresenterTest {
     @Before
     public void setup() {
         MockitoAnnotations.initMocks(this);
+        // View is always appears active
         when(mView.isActive()).thenReturn(true);
+        // View acts as though it had started with an intent including the flashcard ID
         when(mView.getIdFromIntent()).thenReturn(FLASHCARD.getId());
     }
 
@@ -68,6 +70,7 @@ public class AddEditFlashcardPresenterTest {
         createAndStartPresenterAndSetArgumentCaptorForGet();
         InOrder inOrder = inOrder(mView);
         inOrder.verify(mView).showLoadingIndicator(true);
+        // Trigger callback with FLASHCARD
         mArgumentCaptor.getValue().onFlashcardLoaded(FLASHCARD);
         inOrder.verify(mView).showLoadingIndicator(false);
         verify(mView).showFlashcard(FLASHCARD);
@@ -90,6 +93,7 @@ public class AddEditFlashcardPresenterTest {
         verify(mFlashcardRepository)
                 .saveFlashcard(mSaveFlashcardArgumentCaptor.capture(),
                         mSaveCallbackArgumentCaptor.capture());
+        // Trigger successful save on callback
         mSaveCallbackArgumentCaptor.getValue().onSaveSuccessful();
         Flashcard savedFlashcard = mSaveFlashcardArgumentCaptor.getValue();
         assertEquals(FLASHCARD, savedFlashcard);
@@ -102,6 +106,7 @@ public class AddEditFlashcardPresenterTest {
         mAddEditFlashcardPresenter.saveFlashcard(FLASHCARD);
         verify(mFlashcardRepository).saveFlashcard(any(Flashcard.class),
                 mSaveCallbackArgumentCaptor.capture());
+        // Trigger failed save on callback
         mSaveCallbackArgumentCaptor.getValue().onSaveFailed();
         verify(mView).showSaveFailed();
     }
