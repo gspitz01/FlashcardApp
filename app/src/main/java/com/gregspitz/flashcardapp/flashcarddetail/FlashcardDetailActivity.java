@@ -10,7 +10,7 @@ import android.widget.TextView;
 import com.gregspitz.flashcardapp.Injection;
 import com.gregspitz.flashcardapp.R;
 import com.gregspitz.flashcardapp.addeditflashcard.AddEditFlashcardActivity;
-import com.gregspitz.flashcardapp.randomflashcard.domain.model.Flashcard;
+import com.gregspitz.flashcardapp.data.model.Flashcard;
 
 public class FlashcardDetailActivity extends AppCompatActivity
         implements FlashcardDetailContract.View {

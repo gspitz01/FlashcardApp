@@ -4,7 +4,7 @@ import com.gregspitz.flashcardapp.UseCase;
 import com.gregspitz.flashcardapp.UseCaseHandler;
 import com.gregspitz.flashcardapp.addeditflashcard.domain.usecase.GetFlashcard;
 import com.gregspitz.flashcardapp.addeditflashcard.domain.usecase.SaveFlashcard;
-import com.gregspitz.flashcardapp.randomflashcard.domain.model.Flashcard;
+import com.gregspitz.flashcardapp.data.model.Flashcard;
 
 /**
  * A presenter for adding and editing {@link Flashcard}s

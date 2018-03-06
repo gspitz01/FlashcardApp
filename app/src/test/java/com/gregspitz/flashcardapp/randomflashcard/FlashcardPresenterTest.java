@@ -4,7 +4,7 @@ import com.gregspitz.flashcardapp.TestUseCaseScheduler;
 import com.gregspitz.flashcardapp.UseCaseHandler;
 import com.gregspitz.flashcardapp.data.source.FlashcardDataSource;
 import com.gregspitz.flashcardapp.data.source.FlashcardRepository;
-import com.gregspitz.flashcardapp.randomflashcard.domain.model.Flashcard;
+import com.gregspitz.flashcardapp.data.model.Flashcard;
 import com.gregspitz.flashcardapp.randomflashcard.domain.usecase.GetRandomFlashcard;
 
 import org.junit.Before;

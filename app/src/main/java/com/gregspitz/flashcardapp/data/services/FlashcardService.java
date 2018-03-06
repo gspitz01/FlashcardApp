@@ -1,6 +1,6 @@
 package com.gregspitz.flashcardapp.data.services;
 
-import com.gregspitz.flashcardapp.randomflashcard.domain.model.Flashcard;
+import com.gregspitz.flashcardapp.data.model.Flashcard;
 
 import java.util.List;
 

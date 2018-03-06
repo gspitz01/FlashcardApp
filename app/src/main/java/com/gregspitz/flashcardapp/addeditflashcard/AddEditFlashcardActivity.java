@@ -4,7 +4,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
 import com.gregspitz.flashcardapp.R;
-import com.gregspitz.flashcardapp.randomflashcard.domain.model.Flashcard;
+import com.gregspitz.flashcardapp.data.model.Flashcard;
 
 public class AddEditFlashcardActivity extends AppCompatActivity
         implements AddEditFlashcardContract.View {

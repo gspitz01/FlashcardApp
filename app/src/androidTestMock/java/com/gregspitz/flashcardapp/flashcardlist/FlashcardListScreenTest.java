@@ -10,10 +10,10 @@ import android.view.View;
 
 import com.gregspitz.flashcardapp.R;
 import com.gregspitz.flashcardapp.addeditflashcard.AddEditFlashcardActivity;
-import com.gregspitz.flashcardapp.data.FakeFlashcardRemoteDataSource;
+import com.gregspitz.flashcardapp.data.source.remote.FakeFlashcardRemoteDataSource;
 import com.gregspitz.flashcardapp.data.source.FlashcardRepository;
 import com.gregspitz.flashcardapp.flashcarddetail.FlashcardDetailActivity;
-import com.gregspitz.flashcardapp.randomflashcard.domain.model.Flashcard;
+import com.gregspitz.flashcardapp.data.model.Flashcard;
 
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;

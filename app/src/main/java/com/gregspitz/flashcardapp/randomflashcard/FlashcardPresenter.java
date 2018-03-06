@@ -4,7 +4,7 @@ import android.support.annotation.NonNull;
 
 import com.gregspitz.flashcardapp.UseCase;
 import com.gregspitz.flashcardapp.UseCaseHandler;
-import com.gregspitz.flashcardapp.randomflashcard.domain.model.Flashcard;
+import com.gregspitz.flashcardapp.data.model.Flashcard;
 import com.gregspitz.flashcardapp.randomflashcard.domain.usecase.GetRandomFlashcard;
 
 /**

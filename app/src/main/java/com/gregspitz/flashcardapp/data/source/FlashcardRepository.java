@@ -2,7 +2,7 @@ package com.gregspitz.flashcardapp.data.source;
 
 import android.support.annotation.NonNull;
 
-import com.gregspitz.flashcardapp.randomflashcard.domain.model.Flashcard;
+import com.gregspitz.flashcardapp.data.model.Flashcard;
 
 /**
  * Data source for flashcards
@@ -12,16 +12,21 @@ public class FlashcardRepository implements FlashcardDataSource {
 
     private static FlashcardRepository INSTANCE;
 
+    private final FlashcardDataSource mLocalDataService;
     private final FlashcardDataSource mRemoteDataService;
 
     // Prevent direct instantiation
-    private FlashcardRepository(@NonNull FlashcardDataSource remoteDataService) {
+    private FlashcardRepository(
+            @NonNull FlashcardDataSource localDataService,
+            @NonNull FlashcardDataSource remoteDataService) {
+        mLocalDataService = localDataService;
         mRemoteDataService = remoteDataService;
     }
 
-    public static FlashcardRepository getInstance(FlashcardDataSource remoteDataService) {
+    public static FlashcardRepository getInstance(
+            FlashcardDataSource localDataService, FlashcardDataSource remoteDataService) {
         if (INSTANCE == null) {
-            INSTANCE = new FlashcardRepository(remoteDataService);
+            INSTANCE = new FlashcardRepository(localDataService, remoteDataService);
         }
         return INSTANCE;
     }
@@ -32,11 +37,13 @@ public class FlashcardRepository implements FlashcardDataSource {
 
     @Override
     public void getFlashcards(@NonNull GetFlashcardsCallback callback) {
+        // TODO: update this to use local service
         mRemoteDataService.getFlashcards(callback);
     }
 
     @Override
     public void getFlashcard(@NonNull String flashcardId, @NonNull GetFlashcardCallback callback) {
+        // TODO: update this to use local service
         mRemoteDataService.getFlashcard(flashcardId, callback);
     }
 

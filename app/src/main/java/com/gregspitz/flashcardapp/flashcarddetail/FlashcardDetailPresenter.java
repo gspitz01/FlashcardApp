@@ -3,7 +3,7 @@ package com.gregspitz.flashcardapp.flashcarddetail;
 import com.gregspitz.flashcardapp.UseCase;
 import com.gregspitz.flashcardapp.UseCaseHandler;
 import com.gregspitz.flashcardapp.addeditflashcard.domain.usecase.GetFlashcard;
-import com.gregspitz.flashcardapp.randomflashcard.domain.model.Flashcard;
+import com.gregspitz.flashcardapp.data.model.Flashcard;
 
 /**
  * A presenter for FlashcardDetail view

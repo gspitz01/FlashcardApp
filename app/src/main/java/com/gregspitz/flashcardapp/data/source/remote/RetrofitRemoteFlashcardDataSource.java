@@ -1,10 +1,11 @@
-package com.gregspitz.flashcardapp.data.source;
+package com.gregspitz.flashcardapp.data.source.remote;
 
 import android.support.annotation.NonNull;
 
 import com.gregspitz.flashcardapp.data.services.FlashcardService;
 import com.gregspitz.flashcardapp.data.services.ServiceBuilder;
-import com.gregspitz.flashcardapp.randomflashcard.domain.model.Flashcard;
+import com.gregspitz.flashcardapp.data.source.FlashcardDataSource;
+import com.gregspitz.flashcardapp.data.model.Flashcard;
 
 import java.util.List;
 

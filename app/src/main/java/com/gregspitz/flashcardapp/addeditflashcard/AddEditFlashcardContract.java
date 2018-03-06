@@ -2,7 +2,7 @@ package com.gregspitz.flashcardapp.addeditflashcard;
 
 import com.gregspitz.flashcardapp.BasePresenter;
 import com.gregspitz.flashcardapp.BaseView;
-import com.gregspitz.flashcardapp.randomflashcard.domain.model.Flashcard;
+import com.gregspitz.flashcardapp.data.model.Flashcard;
 
 /**
  * A contract between the AddEditFlashcard view and its presenter

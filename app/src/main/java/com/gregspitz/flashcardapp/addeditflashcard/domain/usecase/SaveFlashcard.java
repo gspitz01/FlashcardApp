@@ -3,7 +3,7 @@ package com.gregspitz.flashcardapp.addeditflashcard.domain.usecase;
 import com.gregspitz.flashcardapp.UseCase;
 import com.gregspitz.flashcardapp.data.source.FlashcardDataSource;
 import com.gregspitz.flashcardapp.data.source.FlashcardRepository;
-import com.gregspitz.flashcardapp.randomflashcard.domain.model.Flashcard;
+import com.gregspitz.flashcardapp.data.model.Flashcard;
 
 /**
  * A use case for saving a {@link Flashcard}

@@ -3,7 +3,7 @@ package com.gregspitz.flashcardapp.flashcardlist.domain.usecase;
 import com.gregspitz.flashcardapp.UseCase;
 import com.gregspitz.flashcardapp.data.source.FlashcardDataSource;
 import com.gregspitz.flashcardapp.data.source.FlashcardRepository;
-import com.gregspitz.flashcardapp.randomflashcard.domain.model.Flashcard;
+import com.gregspitz.flashcardapp.data.model.Flashcard;
 
 import java.util.List;
 

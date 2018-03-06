@@ -2,7 +2,7 @@ package com.gregspitz.flashcardapp.data.source;
 
 import android.support.annotation.NonNull;
 
-import com.gregspitz.flashcardapp.randomflashcard.domain.model.Flashcard;
+import com.gregspitz.flashcardapp.data.model.Flashcard;
 
 import java.util.List;
 

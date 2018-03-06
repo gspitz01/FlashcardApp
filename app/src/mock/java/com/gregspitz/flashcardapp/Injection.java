@@ -1,11 +1,11 @@
 package com.gregspitz.flashcardapp;
 
-import android.content.ContentValues;
 import android.content.Context;
 import android.support.annotation.NonNull;
 
 import com.gregspitz.flashcardapp.addeditflashcard.domain.usecase.GetFlashcard;
-import com.gregspitz.flashcardapp.data.FakeFlashcardRemoteDataSource;
+import com.gregspitz.flashcardapp.data.source.local.FakeFlashcardLocalDataSource;
+import com.gregspitz.flashcardapp.data.source.remote.FakeFlashcardRemoteDataSource;
 import com.gregspitz.flashcardapp.data.source.FlashcardRepository;
 import com.gregspitz.flashcardapp.randomflashcard.domain.usecase.GetRandomFlashcard;
 import com.gregspitz.flashcardapp.flashcardlist.domain.usecase.GetFlashcards;
@@ -19,7 +19,9 @@ import com.gregspitz.flashcardapp.flashcardlist.domain.usecase.GetFlashcards;
 
 public class Injection {
     public static FlashcardRepository provideFlashcardRepository(@NonNull Context context) {
-        return FlashcardRepository.getInstance(FakeFlashcardRemoteDataSource.getInstance());
+        return FlashcardRepository.getInstance(
+                FakeFlashcardLocalDataSource.getInstance(),
+                FakeFlashcardRemoteDataSource.getInstance());
     }
 
     public static UseCaseHandler provideUseCaseHandler() {

@@ -6,9 +6,9 @@ import android.support.test.runner.AndroidJUnit4;
 
 import com.gregspitz.flashcardapp.R;
 import com.gregspitz.flashcardapp.addeditflashcard.AddEditFlashcardActivity;
-import com.gregspitz.flashcardapp.data.FakeFlashcardRemoteDataSource;
+import com.gregspitz.flashcardapp.data.source.remote.FakeFlashcardRemoteDataSource;
 import com.gregspitz.flashcardapp.data.source.FlashcardRepository;
-import com.gregspitz.flashcardapp.randomflashcard.domain.model.Flashcard;
+import com.gregspitz.flashcardapp.data.model.Flashcard;
 
 import org.junit.Before;
 import org.junit.Rule;
