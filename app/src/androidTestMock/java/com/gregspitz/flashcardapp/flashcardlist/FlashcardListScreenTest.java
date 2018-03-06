@@ -42,8 +42,6 @@ import static org.hamcrest.CoreMatchers.not;
 @RunWith(AndroidJUnit4.class)
 public class FlashcardListScreenTest {
 
-    // TODO: make more tests here, specifically for clicks
-
     private static final Flashcard FLASHCARD_1 =
             new Flashcard("0", "A front", "A back");
 
