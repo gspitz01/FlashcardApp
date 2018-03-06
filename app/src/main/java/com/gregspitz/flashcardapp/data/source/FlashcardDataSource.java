@@ -17,15 +17,27 @@ public interface FlashcardDataSource {
         void onFlashcardsLoaded(List<Flashcard> flashcards);
 
         void onDataNotAvailable();
+
     }
 
+    void getFlashcards(@NonNull GetFlashcardsCallback callback);
+
     interface GetFlashcardCallback {
+
         void onFlashcardLoaded(Flashcard flashcard);
 
         void onDataNotAvailable();
     }
 
-    void getFlashcards(@NonNull GetFlashcardsCallback callback);
-
     void getFlashcard(@NonNull String flashcardId, @NonNull GetFlashcardCallback callback);
+
+    interface SaveFlashcardCallback {
+
+        void onSaveSuccessful();
+
+        void onSaveFailed();
+
+    }
+
+    void saveFlashcard(@NonNull Flashcard flashcard, @NonNull SaveFlashcardCallback callback);
 }

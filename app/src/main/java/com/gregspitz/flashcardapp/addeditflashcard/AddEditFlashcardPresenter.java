@@ -3,6 +3,7 @@ package com.gregspitz.flashcardapp.addeditflashcard;
 import com.gregspitz.flashcardapp.UseCase;
 import com.gregspitz.flashcardapp.UseCaseHandler;
 import com.gregspitz.flashcardapp.addeditflashcard.domain.usecase.GetFlashcard;
+import com.gregspitz.flashcardapp.addeditflashcard.domain.usecase.SaveFlashcard;
 import com.gregspitz.flashcardapp.randomflashcard.domain.model.Flashcard;
 
 /**
@@ -14,14 +15,16 @@ public class AddEditFlashcardPresenter implements AddEditFlashcardContract.Prese
     private UseCaseHandler mUseCaseHandler;
     private AddEditFlashcardContract.View mView;
     private GetFlashcard mGetFlashcard;
+    private SaveFlashcard mSaveFlashcard;
     private Flashcard mFlashcard;
 
     public AddEditFlashcardPresenter(
             UseCaseHandler useCaseHandler, AddEditFlashcardContract.View view,
-            GetFlashcard getFlashcard) {
+            GetFlashcard getFlashcard, SaveFlashcard saveFlashcard) {
         mUseCaseHandler = useCaseHandler;
         mView = view;
         mGetFlashcard = getFlashcard;
+        mSaveFlashcard = saveFlashcard;
         mView.setPresenter(this);
     }
 
@@ -56,7 +59,27 @@ public class AddEditFlashcardPresenter implements AddEditFlashcardContract.Prese
     }
 
     @Override
-    public void saveFlashcard() {
-        // TODO: implement and test
+    public void saveFlashcard(Flashcard flashcard) {
+        mUseCaseHandler.execute(mSaveFlashcard, new SaveFlashcard.RequestValues(flashcard),
+                new UseCase.UseCaseCallback<SaveFlashcard.ResponseValue>() {
+                    @Override
+                    public void onSuccess(SaveFlashcard.ResponseValue response) {
+                        if (mView.isActive()) {
+                            mView.showSaveSuccessful();
+                        }
+                    }
+
+                    @Override
+                    public void onError() {
+                        if (mView.isActive()) {
+                            mView.showSaveFailed();
+                        }
+                    }
+                });
+    }
+
+    @Override
+    public void showList() {
+        mView.showFlashcardList();
     }
 }

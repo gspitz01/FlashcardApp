@@ -44,6 +44,11 @@ public class FakeFlashcardRemoteDataSource implements FlashcardDataSource {
         }
     }
 
+    @Override
+    public void saveFlashcard(@NonNull Flashcard flashcard, @NonNull SaveFlashcardCallback callback) {
+
+    }
+
     @VisibleForTesting
     public void addFlashcards(Flashcard... flashcards) {
         for (Flashcard flashcard : flashcards) {

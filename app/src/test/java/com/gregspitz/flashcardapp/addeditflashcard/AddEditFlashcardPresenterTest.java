@@ -3,6 +3,7 @@ package com.gregspitz.flashcardapp.addeditflashcard;
 import com.gregspitz.flashcardapp.TestUseCaseScheduler;
 import com.gregspitz.flashcardapp.UseCaseHandler;
 import com.gregspitz.flashcardapp.addeditflashcard.domain.usecase.GetFlashcard;
+import com.gregspitz.flashcardapp.addeditflashcard.domain.usecase.SaveFlashcard;
 import com.gregspitz.flashcardapp.data.source.FlashcardDataSource;
 import com.gregspitz.flashcardapp.data.source.FlashcardRepository;
 import com.gregspitz.flashcardapp.randomflashcard.domain.model.Flashcard;
@@ -15,6 +16,8 @@ import org.mockito.InOrder;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
+import static junit.framework.Assert.assertEquals;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.inOrder;
 import static org.mockito.Mockito.verify;
@@ -38,6 +41,13 @@ public class AddEditFlashcardPresenterTest {
     @Captor
     private ArgumentCaptor<FlashcardDataSource.GetFlashcardCallback> mArgumentCaptor;
 
+    @Captor
+    private ArgumentCaptor<Flashcard> mSaveFlashcardArgumentCaptor;
+
+    @Captor
+    private ArgumentCaptor<FlashcardDataSource.SaveFlashcardCallback>
+            mSaveCallbackArgumentCaptor;
+
     private AddEditFlashcardPresenter mAddEditFlashcardPresenter;
 
     @Before
@@ -55,7 +65,7 @@ public class AddEditFlashcardPresenterTest {
 
     @Test
     public void onStart_showsFlashcardInView() {
-        createAndStartPresenterAndSetArgumentCaptor();
+        createAndStartPresenterAndSetArgumentCaptorForGet();
         InOrder inOrder = inOrder(mView);
         inOrder.verify(mView).showLoadingIndicator(true);
         mArgumentCaptor.getValue().onFlashcardLoaded(FLASHCARD);
@@ -65,7 +75,7 @@ public class AddEditFlashcardPresenterTest {
 
     @Test
     public void noAvailableFlashcard_showsFailedToLoadInView() {
-        createAndStartPresenterAndSetArgumentCaptor();
+        createAndStartPresenterAndSetArgumentCaptorForGet();
         InOrder inOrder = inOrder(mView);
         inOrder.verify(mView).showLoadingIndicator(true);
         mArgumentCaptor.getValue().onDataNotAvailable();
@@ -73,16 +83,52 @@ public class AddEditFlashcardPresenterTest {
         verify(mView).showFailedToLoadFlashcard();
     }
 
-    private void createAndStartPresenterAndSetArgumentCaptor() {
+    @Test
+    public void updateFlashcard_savesFlashcardToRepositoryAndShowSuccessInView() {
         mAddEditFlashcardPresenter = createPresenter();
-        mAddEditFlashcardPresenter.start();
+        mAddEditFlashcardPresenter.saveFlashcard(FLASHCARD);
+        verify(mFlashcardRepository)
+                .saveFlashcard(mSaveFlashcardArgumentCaptor.capture(),
+                        mSaveCallbackArgumentCaptor.capture());
+        mSaveCallbackArgumentCaptor.getValue().onSaveSuccessful();
+        Flashcard savedFlashcard = mSaveFlashcardArgumentCaptor.getValue();
+        assertEquals(FLASHCARD, savedFlashcard);
+        verify(mView).showSaveSuccessful();
+    }
+
+    @Test
+    public void failedSaved_showsFailedSaveInView() {
+        mAddEditFlashcardPresenter = createPresenter();
+        mAddEditFlashcardPresenter.saveFlashcard(FLASHCARD);
+        verify(mFlashcardRepository).saveFlashcard(any(Flashcard.class),
+                mSaveCallbackArgumentCaptor.capture());
+        mSaveCallbackArgumentCaptor.getValue().onSaveFailed();
+        verify(mView).showSaveFailed();
+    }
+
+    @Test
+    public void showList_showsListInView() {
+        mAddEditFlashcardPresenter = createPresenter();
+        mAddEditFlashcardPresenter.showList();
+        verify(mView).showFlashcardList();
+    }
+
+    private void createAndStartPresenterAndSetArgumentCaptorForGet() {
+        createAndStartPresenter();
         verify(mFlashcardRepository).getFlashcard(eq(FLASHCARD.getId()),
                 mArgumentCaptor.capture());
+    }
+
+    private void createAndStartPresenter() {
+        mAddEditFlashcardPresenter = createPresenter();
+        mAddEditFlashcardPresenter.start();
     }
 
     private AddEditFlashcardPresenter createPresenter() {
         UseCaseHandler useCaseHandler = new UseCaseHandler(new TestUseCaseScheduler());
         GetFlashcard getFlashcard = new GetFlashcard(mFlashcardRepository);
-        return new AddEditFlashcardPresenter(useCaseHandler, mView, getFlashcard);
+        SaveFlashcard saveFlashcard = new SaveFlashcard(mFlashcardRepository);
+        return new AddEditFlashcardPresenter(useCaseHandler, mView,
+                getFlashcard, saveFlashcard);
     }
 }

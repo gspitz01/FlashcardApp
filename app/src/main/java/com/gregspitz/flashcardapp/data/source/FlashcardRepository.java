@@ -2,6 +2,8 @@ package com.gregspitz.flashcardapp.data.source;
 
 import android.support.annotation.NonNull;
 
+import com.gregspitz.flashcardapp.randomflashcard.domain.model.Flashcard;
+
 /**
  * Data source for flashcards
  */
@@ -36,5 +38,10 @@ public class FlashcardRepository implements FlashcardDataSource {
     @Override
     public void getFlashcard(@NonNull String flashcardId, @NonNull GetFlashcardCallback callback) {
         mRemoteDataService.getFlashcard(flashcardId, callback);
+    }
+
+    @Override
+    public void saveFlashcard(@NonNull Flashcard flashcard, @NonNull SaveFlashcardCallback callback) {
+        // TODO: fill this in
     }
 }

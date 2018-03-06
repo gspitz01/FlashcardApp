@@ -10,18 +10,31 @@ import com.gregspitz.flashcardapp.randomflashcard.domain.model.Flashcard;
 
 public interface AddEditFlashcardContract {
 
-    // TODO: fill this out and make tests and presenter
     interface View extends BaseView<Presenter> {
+        
         void showLoadingIndicator(boolean active);
+        
         String getIdFromIntent();
+        
         void showFlashcard(Flashcard flashcard);
+        
         void showFlashcardList();
+        
         void showFailedToLoadFlashcard();
+        
+        void showSaveSuccessful();
+        
+        void showSaveFailed();
+        
         boolean isActive();
     }
 
     interface Presenter extends BasePresenter {
+        
         void loadFlashcard(String flashcardId);
-        void saveFlashcard();
+        
+        void saveFlashcard(Flashcard flashcard);
+        
+        void showList();
     }
 }

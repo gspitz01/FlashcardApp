@@ -52,6 +52,16 @@ public class AddEditFlashcardActivity extends AppCompatActivity
     }
 
     @Override
+    public void showSaveSuccessful() {
+        // TODO: implement and test
+    }
+
+    @Override
+    public void showSaveFailed() {
+        // TODO: implement and test
+    }
+
+    @Override
     public boolean isActive() {
         // TODO: implement and test
         return false;
