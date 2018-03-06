@@ -40,7 +40,7 @@ import static org.hamcrest.CoreMatchers.not;
  * Tests for the implementation of {@link FlashcardListActivity}
  */
 @RunWith(AndroidJUnit4.class)
-public class FlashcardListActivityTest {
+public class FlashcardListScreenTest {
 
     // TODO: make more tests here, specifically for clicks
 

@@ -37,7 +37,11 @@ public class FakeFlashcardRemoteDataSource implements FlashcardDataSource {
 
     @Override
     public void getFlashcard(@NonNull String flashcardId, @NonNull GetFlashcardCallback callback) {
-        callback.onFlashcardLoaded(FLASHCARD_SERVICE_DATA.get(flashcardId));
+        if (FLASHCARD_SERVICE_DATA.get(flashcardId) == null) {
+            callback.onDataNotAvailable();
+        } else {
+            callback.onFlashcardLoaded(FLASHCARD_SERVICE_DATA.get(flashcardId));
+        }
     }
 
     @VisibleForTesting

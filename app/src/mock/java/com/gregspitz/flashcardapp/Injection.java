@@ -1,8 +1,10 @@
 package com.gregspitz.flashcardapp;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.support.annotation.NonNull;
 
+import com.gregspitz.flashcardapp.addeditflashcard.domain.usecase.GetFlashcard;
 import com.gregspitz.flashcardapp.data.FakeFlashcardRemoteDataSource;
 import com.gregspitz.flashcardapp.data.source.FlashcardRepository;
 import com.gregspitz.flashcardapp.randomflashcard.domain.usecase.GetRandomFlashcard;
@@ -24,11 +26,15 @@ public class Injection {
         return UseCaseHandler.getInstance();
     }
 
-    public static GetRandomFlashcard provideGetFlashcard(@NonNull Context context) {
+    public static GetRandomFlashcard provideGetRandomFlashcard(@NonNull Context context) {
         return new GetRandomFlashcard(provideFlashcardRepository(context));
     }
 
     public static GetFlashcards provideGetFlashcards(@NonNull Context context) {
         return new GetFlashcards(provideFlashcardRepository(context));
+    }
+
+    public static GetFlashcard provideGetFlashcard(@NonNull Context context) {
+        return new GetFlashcard(provideFlashcardRepository(context));
     }
 }

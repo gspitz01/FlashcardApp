@@ -4,4 +4,5 @@
     <string name="unable_to_load_flashcard_text">Could not load flashcard</string>
     <string name="flashcard_loading_text">Flashcard loading&#8230;</string>
     <string name="no_flashcards_to_show_text">No flashcards</string>
+    <string name="edit_flashcard_button_text">Edit Flashcard</string>
 </resources>

@@ -24,7 +24,7 @@ import static android.support.test.espresso.matcher.ViewMatchers.withText;
  * Tests for the implementation of {@link FlashcardActivity}
  */
 @RunWith(AndroidJUnit4.class)
-public class FlashcardActivityTest {
+public class FlashcardScreenTest {
     @Rule
     public ActivityTestRule<FlashcardActivity> mActivityTestRule =
             new ActivityTestRule<>(FlashcardActivity.class, true, false);

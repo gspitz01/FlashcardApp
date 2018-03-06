@@ -39,7 +39,7 @@ public class FlashcardActivity extends AppCompatActivity implements FlashcardCon
 
         // Create presenter
         new FlashcardPresenter(Injection.provideUseCaseHandler(),
-                this, Injection.provideGetFlashcard(getApplicationContext()));
+                this, Injection.provideGetRandomFlashcard(getApplicationContext()));
     }
 
     @Override
