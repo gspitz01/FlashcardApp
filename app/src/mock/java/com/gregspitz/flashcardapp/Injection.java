@@ -4,6 +4,7 @@ import android.content.Context;
 import android.support.annotation.NonNull;
 
 import com.gregspitz.flashcardapp.addeditflashcard.domain.usecase.GetFlashcard;
+import com.gregspitz.flashcardapp.addeditflashcard.domain.usecase.SaveFlashcard;
 import com.gregspitz.flashcardapp.data.source.local.FakeFlashcardLocalDataSource;
 import com.gregspitz.flashcardapp.data.source.remote.FakeFlashcardRemoteDataSource;
 import com.gregspitz.flashcardapp.data.source.FlashcardRepository;
@@ -38,5 +39,9 @@ public class Injection {
 
     public static GetFlashcard provideGetFlashcard(@NonNull Context context) {
         return new GetFlashcard(provideFlashcardRepository(context));
+    }
+
+    public static SaveFlashcard provideSaveFlashcard(@NonNull Context context) {
+        return new SaveFlashcard(provideFlashcardRepository(context));
     }
 }

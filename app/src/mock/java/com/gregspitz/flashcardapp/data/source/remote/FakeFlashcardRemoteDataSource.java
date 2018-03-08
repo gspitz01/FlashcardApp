@@ -19,6 +19,8 @@ public class FakeFlashcardRemoteDataSource implements FlashcardDataSource {
 
     private static final Map<String, Flashcard> FLASHCARD_SERVICE_DATA = new LinkedHashMap<>();
 
+    public static final String FAILED_SAVE_FRONT = "failed_save";
+
     // prevent direct instantiation
     private FakeFlashcardRemoteDataSource() {}
 
@@ -45,7 +47,15 @@ public class FakeFlashcardRemoteDataSource implements FlashcardDataSource {
 
     @Override
     public void saveFlashcard(@NonNull Flashcard flashcard, @NonNull SaveFlashcardCallback callback) {
-
+        if (flashcard.getFront().equals(FAILED_SAVE_FRONT)) {
+            callback.onSaveFailed();
+        } else {
+            if (FLASHCARD_SERVICE_DATA.get(flashcard.getId()) != null) {
+                FLASHCARD_SERVICE_DATA.remove(flashcard.getId());
+            }
+            FLASHCARD_SERVICE_DATA.put(flashcard.getId(), flashcard);
+            callback.onSaveSuccessful();
+        }
     }
 
     public void addFlashcards(Flashcard... flashcards) {

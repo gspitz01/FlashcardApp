@@ -49,6 +49,7 @@ public class FlashcardRepository implements FlashcardDataSource {
 
     @Override
     public void saveFlashcard(@NonNull Flashcard flashcard, @NonNull SaveFlashcardCallback callback) {
-        // TODO: fill this in
+        // TODO: update this to also use local service
+        mRemoteDataService.saveFlashcard(flashcard, callback);
     }
 }

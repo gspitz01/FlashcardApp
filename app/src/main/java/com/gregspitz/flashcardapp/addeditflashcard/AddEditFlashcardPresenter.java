@@ -66,6 +66,7 @@ public class AddEditFlashcardPresenter implements AddEditFlashcardContract.Prese
                     public void onSuccess(SaveFlashcard.ResponseValue response) {
                         if (mView.isActive()) {
                             mView.showSaveSuccessful();
+                            mView.showFlashcardList();
                         }
                     }
 

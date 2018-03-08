@@ -5,4 +5,8 @@
     <string name="flashcard_loading_text">Flashcard loading&#8230;</string>
     <string name="no_flashcards_to_show_text">No flashcards</string>
     <string name="edit_flashcard_button_text">Edit Flashcard</string>
+    <string name="flashcard_front_label_text">Front</string>
+    <string name="flashcard_back_label_text">Back</string>
+    <string name="save_flashcard_button_text">Save</string>
+    <string name="failed_save_toast_text">Save Failed!</string>
 </resources>
