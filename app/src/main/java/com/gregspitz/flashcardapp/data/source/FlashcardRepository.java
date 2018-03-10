@@ -1,8 +1,15 @@
 package com.gregspitz.flashcardapp.data.source;
 
 import android.support.annotation.NonNull;
+import android.support.annotation.VisibleForTesting;
 
 import com.gregspitz.flashcardapp.data.model.Flashcard;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Data source for flashcards
@@ -10,17 +17,24 @@ import com.gregspitz.flashcardapp.data.model.Flashcard;
 
 public class FlashcardRepository implements FlashcardDataSource {
 
+    // TODO: finish this
+
     private static FlashcardRepository INSTANCE;
 
     private final FlashcardDataSource mLocalDataService;
     private final FlashcardDataSource mRemoteDataService;
+    private Map<String, Flashcard> mCache;
+    private boolean mCacheIsDirty;
 
     // Prevent direct instantiation
-    private FlashcardRepository(
+    @VisibleForTesting
+    public FlashcardRepository(
             @NonNull FlashcardDataSource localDataService,
             @NonNull FlashcardDataSource remoteDataService) {
         mLocalDataService = localDataService;
         mRemoteDataService = remoteDataService;
+        mCache = new HashMap<>();
+        mCacheIsDirty = true;
     }
 
     public static FlashcardRepository getInstance(
@@ -37,19 +51,41 @@ public class FlashcardRepository implements FlashcardDataSource {
 
     @Override
     public void getFlashcards(@NonNull GetFlashcardsCallback callback) {
-        // TODO: update this to use local service
-        mRemoteDataService.getFlashcards(callback);
+        if (mCacheIsDirty) {
+            updateCache();
+        }
+        callback.onFlashcardsLoaded(new ArrayList<>(mCache.values()));
+
+//        mRemoteDataService.getFlashcards(callback);
     }
 
     @Override
     public void getFlashcard(@NonNull String flashcardId, @NonNull GetFlashcardCallback callback) {
-        // TODO: update this to use local service
-        mRemoteDataService.getFlashcard(flashcardId, callback);
+        mLocalDataService.getFlashcard(flashcardId, callback);
+//        mRemoteDataService.getFlashcard(flashcardId, callback);
     }
 
     @Override
     public void saveFlashcard(@NonNull Flashcard flashcard, @NonNull SaveFlashcardCallback callback) {
-        // TODO: update this to also use local service
-        mRemoteDataService.saveFlashcard(flashcard, callback);
+        mLocalDataService.saveFlashcard(flashcard, callback);
+//        mRemoteDataService.saveFlashcard(flashcard, callback);
     }
+
+    private void updateCache() {
+        mLocalDataService.getFlashcards(new GetFlashcardsCallback() {
+            @Override
+            public void onFlashcardsLoaded(List<Flashcard> flashcards) {
+                mCache.clear();
+                for (Flashcard flashcard : flashcards) {
+                    mCache.put(flashcard.getId(), flashcard);
+                }
+            }
+
+            @Override
+            public void onDataNotAvailable() {
+//               throw new FlashcardRepositoryException("Data unavailable from local data source.");
+            }
+        });
+    }
+
 }

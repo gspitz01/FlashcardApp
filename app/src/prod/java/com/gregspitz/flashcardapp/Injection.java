@@ -4,6 +4,7 @@ import android.content.Context;
 import android.support.annotation.NonNull;
 
 import com.gregspitz.flashcardapp.addeditflashcard.domain.usecase.GetFlashcard;
+import com.gregspitz.flashcardapp.addeditflashcard.domain.usecase.SaveFlashcard;
 import com.gregspitz.flashcardapp.data.source.FlashcardRepository;
 import com.gregspitz.flashcardapp.data.source.local.RoomLocalFlashcardDataSource;
 import com.gregspitz.flashcardapp.data.source.remote.RetrofitRemoteFlashcardDataSource;
@@ -17,8 +18,13 @@ import com.gregspitz.flashcardapp.randomflashcard.domain.usecase.GetRandomFlashc
 
 public class Injection {
     public static FlashcardRepository provideFlashcardRepository(@NonNull Context context) {
-        return FlashcardRepository.getInstance(RoomLocalFlashcardDataSource.getInstance(context),
+        return FlashcardRepository.getInstance(provideRoomLocalFlashcardDataSource(context),
                 RetrofitRemoteFlashcardDataSource.getInstance());
+    }
+
+    public static RoomLocalFlashcardDataSource provideRoomLocalFlashcardDataSource(
+            @NonNull Context context) {
+        return RoomLocalFlashcardDataSource.getInstance(context);
     }
 
     public static UseCaseHandler provideUseCaseHandler() {
@@ -35,5 +41,9 @@ public class Injection {
 
     public static GetFlashcard provideGetFlashcard(@NonNull Context context) {
         return new GetFlashcard(provideFlashcardRepository(context));
+    }
+
+    public static SaveFlashcard provideSaveFlashcard(@NonNull Context context) {
+        return new SaveFlashcard(provideFlashcardRepository(context));
     }
 }
