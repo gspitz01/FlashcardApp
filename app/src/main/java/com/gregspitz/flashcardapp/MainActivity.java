@@ -21,6 +21,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
+import com.gregspitz.flashcardapp.flashcardlist.FlashcardListActivity;
 import com.gregspitz.flashcardapp.randomflashcard.FlashcardActivity;
 
 public class MainActivity extends AppCompatActivity {
@@ -36,6 +37,15 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, FlashcardActivity.class);
                 startActivity(intent);
+            }
+        });
+
+        Button showListButton = findViewById(R.id.show_list_button);
+        showListButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MainActivity.this,
+                        FlashcardListActivity.class));
             }
         });
 
