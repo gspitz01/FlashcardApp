@@ -55,4 +55,6 @@ public interface FlashcardDataSource {
     }
 
     void saveFlashcard(@NonNull Flashcard flashcard, @NonNull SaveFlashcardCallback callback);
+
+    void deleteAllFlashcards();
 }

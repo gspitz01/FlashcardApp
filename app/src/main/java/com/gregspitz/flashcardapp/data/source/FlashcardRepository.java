@@ -21,7 +21,6 @@ import android.support.annotation.VisibleForTesting;
 import com.gregspitz.flashcardapp.data.model.Flashcard;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -65,42 +64,95 @@ public class FlashcardRepository implements FlashcardDataSource {
     }
 
     @Override
-    public void getFlashcards(@NonNull GetFlashcardsCallback callback) {
-        if (mCacheIsDirty) {
-            updateCache();
+    public void getFlashcards(@NonNull final GetFlashcardsCallback callback) {
+        if (mCache != null && !mCacheIsDirty) {
+            callback.onFlashcardsLoaded(new ArrayList<>(mCache.values()));
+            return;
         }
-        callback.onFlashcardsLoaded(new ArrayList<>(mCache.values()));
 
-//        mRemoteDataService.getFlashcards(callback);
+        if (mCacheIsDirty) {
+            getFlashcardsFromRemoteDataService(callback);
+        } else {
+            mLocalDataService.getFlashcards(new GetFlashcardsCallback() {
+                @Override
+                public void onFlashcardsLoaded(List<Flashcard> flashcards) {
+                    refreshCache(flashcards);
+                    callback.onFlashcardsLoaded(flashcards);
+                }
+
+                @Override
+                public void onDataNotAvailable() {
+                    getFlashcardsFromRemoteDataService(callback);
+                }
+            });
+        }
     }
 
     @Override
     public void getFlashcard(@NonNull String flashcardId, @NonNull GetFlashcardCallback callback) {
-        mLocalDataService.getFlashcard(flashcardId, callback);
-//        mRemoteDataService.getFlashcard(flashcardId, callback);
+        // TODO: figure out what to do here
+        if (mCache != null && !mCacheIsDirty) {
+            Flashcard flashcard = mCache.get(flashcardId);
+            if (flashcard != null) {
+                callback.onFlashcardLoaded(flashcard);
+            }
+        }
     }
 
     @Override
     public void saveFlashcard(@NonNull Flashcard flashcard, @NonNull SaveFlashcardCallback callback) {
-        mLocalDataService.saveFlashcard(flashcard, callback);
-//        mRemoteDataService.saveFlashcard(flashcard, callback);
+        mRemoteDataService.saveFlashcard(flashcard, callback);
+        mCacheIsDirty = true;
     }
 
-    private void updateCache() {
-        mLocalDataService.getFlashcards(new GetFlashcardsCallback() {
+    @Override
+    public void deleteAllFlashcards() {
+        // Don't allow this function for now
+        // TODO: create an Exception for this
+    }
+
+    private void getFlashcardsFromRemoteDataService(@NonNull final GetFlashcardsCallback callback) {
+        mRemoteDataService.getFlashcards(new GetFlashcardsCallback() {
             @Override
             public void onFlashcardsLoaded(List<Flashcard> flashcards) {
-                mCache.clear();
-                for (Flashcard flashcard : flashcards) {
-                    mCache.put(flashcard.getId(), flashcard);
-                }
+                refreshCache(flashcards);
+                refreshLocalDataService(flashcards);
+                callback.onFlashcardsLoaded(flashcards);
             }
 
             @Override
             public void onDataNotAvailable() {
-//               throw new FlashcardRepositoryException("Data unavailable from local data source.");
+                callback.onDataNotAvailable();
             }
         });
+    }
+
+    private void refreshCache(List<Flashcard> flashcards) {
+        if (mCache == null) {
+            mCache = new HashMap<>();
+        }
+        mCache.clear();
+        for (Flashcard flashcard : flashcards) {
+            mCache.put(flashcard.getId(), flashcard);
+        }
+        mCacheIsDirty = false;
+    }
+
+    private void refreshLocalDataService(List<Flashcard> flashcards) {
+        mLocalDataService.deleteAllFlashcards();
+        for (Flashcard flashcard : flashcards) {
+            mLocalDataService.saveFlashcard(flashcard, new SaveFlashcardCallback() {
+                @Override
+                public void onSaveSuccessful() {
+                    // TODO: put log statement here
+                }
+
+                @Override
+                public void onSaveFailed() {
+                    // TODO: put log statement here
+                }
+            });
+        }
     }
 
 }

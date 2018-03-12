@@ -29,7 +29,7 @@ import com.gregspitz.flashcardapp.data.model.Flashcard;
  */
 @Database(entities = {Flashcard.class}, version = 1)
 public abstract class RoomLocalFlashcardDataSource
-        extends RoomDatabase implements FlashcardDataSource{
+        extends RoomDatabase implements FlashcardDataSource {
 
     private static RoomLocalFlashcardDataSource INSTANCE;
 
@@ -60,7 +60,12 @@ public abstract class RoomLocalFlashcardDataSource
     @Override
     public void saveFlashcard(
             @NonNull Flashcard flashcard, @NonNull SaveFlashcardCallback callback) {
-        INSTANCE.flashcardModel().insert(flashcard);
+        flashcardModel().insert(flashcard);
         callback.onSaveSuccessful();
+    }
+
+    @Override
+    public void deleteAllFlashcards() {
+        flashcardModel().deleteAll();
     }
 }
