@@ -9,4 +9,6 @@
     <string name="flashcard_back_label_text">Back</string>
     <string name="save_flashcard_button_text">Save</string>
     <string name="failed_save_toast_text">Save Failed!</string>
+    <string name="play_game_button_text">Play Flashcard Game</string>
+    <string name="show_flashcard_list_button_text">Flashcard List</string>
 </resources>
