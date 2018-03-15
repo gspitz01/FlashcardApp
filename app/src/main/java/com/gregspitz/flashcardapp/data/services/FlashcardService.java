@@ -21,6 +21,7 @@ import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.http.GET;
+import retrofit2.http.POST;
 
 /**
  * A Retrofit service to retrieve flashcards
@@ -29,4 +30,10 @@ public interface FlashcardService {
 
     @GET("flashcards")
     Call<List<Flashcard>> getFlashcards();
+
+    @GET("flashcard/{id}")
+    Call<Flashcard> getFlashcardById(String id);
+
+    @POST("flashcard")
+    Call<Flashcard> saveFlashcard(Flashcard flashcard);
 }

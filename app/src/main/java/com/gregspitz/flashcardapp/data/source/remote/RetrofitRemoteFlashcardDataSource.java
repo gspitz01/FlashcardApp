@@ -53,29 +53,62 @@ public class RetrofitRemoteFlashcardDataSource implements FlashcardDataSource {
         Call<List<Flashcard>> call = mFlashcardService.getFlashcards();
         call.enqueue(new Callback<List<Flashcard>>() {
             @Override
-            public void onResponse(Call<List<Flashcard>> call, Response<List<Flashcard>> response) {
+            public void onResponse(@NonNull Call<List<Flashcard>> call,
+                                   @NonNull Response<List<Flashcard>> response) {
                 callback.onFlashcardsLoaded(response.body());
             }
 
             @Override
-            public void onFailure(Call<List<Flashcard>> call, Throwable t) {
+            public void onFailure(@NonNull Call<List<Flashcard>> call,
+                                  @NonNull Throwable t) {
                 callback.onDataNotAvailable();
             }
         });
     }
 
     @Override
-    public void getFlashcard(@NonNull String flashcardId, @NonNull GetFlashcardCallback callback) {
-        // TODO: fill this in
+    public void getFlashcard(@NonNull final String flashcardId,
+                             @NonNull final GetFlashcardCallback callback) {
+        Call<Flashcard> call = mFlashcardService.getFlashcardById(flashcardId);
+        call.enqueue(new Callback<Flashcard>() {
+            @Override
+            public void onResponse(@NonNull Call<Flashcard> call,
+                                   @NonNull Response<Flashcard> response) {
+                callback.onFlashcardLoaded(response.body());
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<Flashcard> call, @NonNull Throwable t) {
+                callback.onDataNotAvailable();
+            }
+        });
     }
 
     @Override
-    public void saveFlashcard(@NonNull Flashcard flashcard, @NonNull SaveFlashcardCallback callback) {
-        // TODO: fill this in
+    public void saveFlashcard(@NonNull Flashcard flashcard,
+                              @NonNull final SaveFlashcardCallback callback) {
+        Call<Flashcard> call = mFlashcardService.saveFlashcard(flashcard);
+        call.enqueue(new Callback<Flashcard>() {
+            @Override
+            public void onResponse(@NonNull Call<Flashcard> call,
+                                   @NonNull Response<Flashcard> response) {
+                callback.onSaveSuccessful();
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<Flashcard> call, @NonNull Throwable t) {
+                callback.onSaveFailed();
+            }
+        });
     }
 
     @Override
     public void deleteAllFlashcards() {
-        // TODO: fill this in
+        // Probably don't want to allow this
+    }
+
+    @Override
+    public void refreshFlashcards() {
+        // Not needed, handled by FlashcardRepository
     }
 }

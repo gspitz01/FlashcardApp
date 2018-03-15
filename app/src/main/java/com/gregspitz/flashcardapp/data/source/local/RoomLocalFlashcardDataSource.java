@@ -68,4 +68,9 @@ public abstract class RoomLocalFlashcardDataSource
     public void deleteAllFlashcards() {
         flashcardModel().deleteAll();
     }
+
+    @Override
+    public void refreshFlashcards() {
+        // Not needed, handled by FlashcardRepository
+    }
 }
