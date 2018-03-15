@@ -22,6 +22,10 @@ import android.support.annotation.VisibleForTesting;
 import com.gregspitz.flashcardapp.data.source.FlashcardDataSource;
 import com.gregspitz.flashcardapp.data.model.Flashcard;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * A fake local data source for testing
  */
@@ -30,12 +34,16 @@ public class FakeFlashcardLocalDataSource implements FlashcardDataSource {
 
     private static FakeFlashcardLocalDataSource INSTANCE;
 
+    private Map<String, Flashcard> mDatabase;
+
     /**
      * Constructor, private to avoid instantiation
      * @param context included for consistency with the real version
      */
     @VisibleForTesting
-    public FakeFlashcardLocalDataSource(@NonNull Context context) {}
+    public FakeFlashcardLocalDataSource(@NonNull Context context) {
+        mDatabase = new HashMap<>();
+    }
 
     public static FakeFlashcardLocalDataSource getInstance(@NonNull Context context) {
         if (INSTANCE == null) {
@@ -45,16 +53,32 @@ public class FakeFlashcardLocalDataSource implements FlashcardDataSource {
     }
     @Override
     public void getFlashcards(@NonNull GetFlashcardsCallback callback) {
-        // TODO: fill this in for testing
+        callback.onFlashcardsLoaded(new ArrayList<>(mDatabase.values()));
     }
 
     @Override
     public void getFlashcard(@NonNull String flashcardId, @NonNull GetFlashcardCallback callback) {
-        // TODO: fill this in for testing
+        Flashcard flashcard = mDatabase.get(flashcardId);
+        if (flashcard == null) {
+            callback.onDataNotAvailable();
+        } else {
+            callback.onFlashcardLoaded(flashcard);
+        }
     }
 
     @Override
     public void saveFlashcard(@NonNull Flashcard flashcard, @NonNull SaveFlashcardCallback callback) {
-        // TODO: fill this in for testing
+        mDatabase.put(flashcard.getId(), flashcard);
+        callback.onSaveSuccessful();
+    }
+
+    @Override
+    public void deleteAllFlashcards() {
+        mDatabase.clear();
+    }
+
+    @Override
+    public void refreshFlashcards() {
+        // Not needed, handled by FlashcardRepository
     }
 }

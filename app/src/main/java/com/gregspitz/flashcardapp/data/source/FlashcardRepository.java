@@ -31,24 +31,21 @@ import java.util.Map;
 
 public class FlashcardRepository implements FlashcardDataSource {
 
-    // TODO: finish this
-
     private static FlashcardRepository INSTANCE;
 
     private final FlashcardDataSource mLocalDataService;
     private final FlashcardDataSource mRemoteDataService;
+
+    // Cache is lazily created
     private Map<String, Flashcard> mCache;
-    private boolean mCacheIsDirty;
+    private boolean mCacheIsDirty = false;
 
     // Prevent direct instantiation
-    @VisibleForTesting
-    public FlashcardRepository(
+    private FlashcardRepository(
             @NonNull FlashcardDataSource localDataService,
             @NonNull FlashcardDataSource remoteDataService) {
         mLocalDataService = localDataService;
         mRemoteDataService = remoteDataService;
-        mCache = new HashMap<>();
-        mCacheIsDirty = true;
     }
 
     public static FlashcardRepository getInstance(
@@ -89,19 +86,69 @@ public class FlashcardRepository implements FlashcardDataSource {
     }
 
     @Override
-    public void getFlashcard(@NonNull String flashcardId, @NonNull GetFlashcardCallback callback) {
-        // TODO: figure out what to do here
-        if (mCache != null && !mCacheIsDirty) {
-            Flashcard flashcard = mCache.get(flashcardId);
-            if (flashcard != null) {
+    public void getFlashcard(@NonNull final String flashcardId, @NonNull final GetFlashcardCallback callback) {
+
+        // First look in the cache
+        Flashcard flashcard = getFlashcardWithId(flashcardId);
+        if (flashcard != null) {
+            callback.onFlashcardLoaded(flashcard);
+            return;
+        }
+
+        // If it's not in the cache
+        // look in the local data source
+        // if it's not in there, check the network
+        mLocalDataService.getFlashcard(flashcardId, new GetFlashcardCallback() {
+            @Override
+            public void onFlashcardLoaded(Flashcard flashcard) {
+                if (mCache == null) {
+                    mCache = new HashMap<>();
+                }
+                mCache.put(flashcard.getId(), flashcard);
                 callback.onFlashcardLoaded(flashcard);
             }
+
+            @Override
+            public void onDataNotAvailable() {
+                mRemoteDataService.getFlashcard(flashcardId, new GetFlashcardCallback() {
+                    @Override
+                    public void onFlashcardLoaded(Flashcard flashcard) {
+                        if (mCache == null) {
+                            mCache = new HashMap<>();
+                        }
+                        mCache.put(flashcard.getId(), flashcard);
+                        callback.onFlashcardLoaded(flashcard);
+                    }
+
+                    @Override
+                    public void onDataNotAvailable() {
+                        callback.onDataNotAvailable();
+                    }
+                });
+            }
+        });
+
+    }
+
+    private Flashcard getFlashcardWithId(@NonNull String flashcardId) {
+        if (mCache == null || mCache.isEmpty()) {
+            return null;
+        } else {
+            return mCache.get(flashcardId);
         }
     }
 
     @Override
     public void saveFlashcard(@NonNull Flashcard flashcard, @NonNull SaveFlashcardCallback callback) {
+        // Only save to remote data service
+        // When a get is called it will update local and cache
+        // This is not particularly efficient
         mRemoteDataService.saveFlashcard(flashcard, callback);
+        mCacheIsDirty = true;
+    }
+
+    @Override
+    public void refreshFlashcards() {
         mCacheIsDirty = true;
     }
 

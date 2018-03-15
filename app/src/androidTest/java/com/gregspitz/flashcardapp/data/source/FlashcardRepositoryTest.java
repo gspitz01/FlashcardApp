@@ -20,7 +20,6 @@ import android.support.test.runner.AndroidJUnit4;
 
 import com.gregspitz.flashcardapp.Injection;
 import com.gregspitz.flashcardapp.data.model.Flashcard;
-import com.gregspitz.flashcardapp.data.source.local.RoomLocalFlashcardDataSource;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -38,8 +37,6 @@ import static org.junit.Assert.assertTrue;
 
 @RunWith(AndroidJUnit4.class)
 public class FlashcardRepositoryTest {
-
-    // TODO: add tests for refreshing the cache
 
     private static final Flashcard FLASHCARD_1 =
             new Flashcard("0", "Front1", "Back1");

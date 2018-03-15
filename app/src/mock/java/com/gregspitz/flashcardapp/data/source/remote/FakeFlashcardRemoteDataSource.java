@@ -75,6 +75,16 @@ public class FakeFlashcardRemoteDataSource implements FlashcardDataSource {
         }
     }
 
+    @Override
+    public void deleteAllFlashcards() {
+        // Don't need this
+    }
+
+    @Override
+    public void refreshFlashcards() {
+        // Not needed, handled by FlashcardRepository
+    }
+
     public void addFlashcards(Flashcard... flashcards) {
         for (Flashcard flashcard : flashcards) {
             FLASHCARD_SERVICE_DATA.put(flashcard.getId(), flashcard);
