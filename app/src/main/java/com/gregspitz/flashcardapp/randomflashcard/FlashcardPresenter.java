@@ -46,6 +46,10 @@ public class FlashcardPresenter implements FlashcardContract.Presenter {
 
     @Override
     public void turnFlashcard() {
+        if (mCurrentFlashcard == null) {
+            return;
+        }
+
         String sideToShow = mCurrentFlashcard.getFront();
         if (mShowingFront) {
             sideToShow = mCurrentFlashcard.getBack();
