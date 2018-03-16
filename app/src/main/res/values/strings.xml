@@ -11,4 +11,17 @@
     <string name="failed_save_toast_text">Save Failed!</string>
     <string name="play_game_button_text">Play Flashcard Game</string>
     <string name="show_flashcard_list_button_text">Flashcard List</string>
+    <string name="setting_menu_item_text">Settings</string>
+    <string name="pref_app_theme_text">App Theme</string>
+    <string name="theme_options_default_value">Light</string>
+    <string-array name="theme_options_entries">
+        <item>Light</item>
+        <item>Dark</item>
+        <item>Funky</item>
+    </string-array>
+    <string-array name="theme_options_values">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+    </string-array>
 </resources>

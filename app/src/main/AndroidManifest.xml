@@ -26,6 +26,8 @@
         </activity>
         <activity android:name=".addeditflashcard.AddEditFlashcardActivity">
         </activity>
+        <activity android:name=".settings.SettingsActivity">
+        </activity>
     </application>
 
 </manifest>

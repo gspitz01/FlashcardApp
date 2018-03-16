@@ -18,11 +18,14 @@ package com.gregspitz.flashcardapp;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 
 import com.gregspitz.flashcardapp.flashcardlist.FlashcardListActivity;
 import com.gregspitz.flashcardapp.randomflashcard.FlashcardActivity;
+import com.gregspitz.flashcardapp.settings.SettingsActivity;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -49,5 +52,26 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.main_activity_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch(item.getItemId()) {
+            case R.id.settings_menu_item:
+                showSettingsActivity();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+    private void showSettingsActivity() {
+        startActivity(new Intent(this, SettingsActivity.class));
     }
 }
