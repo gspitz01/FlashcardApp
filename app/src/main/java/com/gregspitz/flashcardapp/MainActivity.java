@@ -24,7 +24,7 @@ import android.view.View;
 import android.widget.Button;
 
 import com.gregspitz.flashcardapp.flashcardlist.FlashcardListActivity;
-import com.gregspitz.flashcardapp.randomflashcard.FlashcardActivity;
+import com.gregspitz.flashcardapp.randomflashcard.RandomFlashcardActivity;
 import com.gregspitz.flashcardapp.settings.SettingsActivity;
 
 public class MainActivity extends AppCompatActivity {
@@ -38,7 +38,7 @@ public class MainActivity extends AppCompatActivity {
         playGameButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, FlashcardActivity.class);
+                Intent intent = new Intent(MainActivity.this, RandomFlashcardActivity.class);
                 startActivity(intent);
             }
         });
@@ -51,6 +51,8 @@ public class MainActivity extends AppCompatActivity {
                         FlashcardListActivity.class));
             }
         });
+
+        // TODO: use preferences to update theme
 
     }
 

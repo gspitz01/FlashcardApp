@@ -21,7 +21,7 @@ import com.gregspitz.flashcardapp.BaseView;
 /**
  * Contract between the flashcard view and the flashcard presenter
  */
-public interface FlashcardContract {
+public interface RandomFlashcardContract {
     interface View extends BaseView<Presenter> {
         void setLoadingIndicator(boolean active);
         void showFlashcardSide(String flashcardSide);

@@ -33,16 +33,21 @@ import org.mockito.MockitoAnnotations;
 import java.util.ArrayList;
 import java.util.List;
 
+import static org.junit.Assert.assertNotEquals;
+import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.inOrder;
 import static org.mockito.Mockito.when;
 
 /**
- * Tests for the implementation of {@link FlashcardPresenter}
+ * Tests for the implementation of {@link RandomFlashcardPresenter}
  */
-public class FlashcardPresenterTest {
+public class RandomFlashcardPresenterTest {
 
-    private static final Flashcard FLASHCARD = new Flashcard("This is the front", "This is the back");
+    private static final Flashcard FLASHCARD_1 =
+            new Flashcard("This is the front", "This is the back");
+    private static final Flashcard FLASHCARD_2 =
+            new Flashcard("Other front", "Other back");
 
     @Mock
     private FlashcardRepository mFlashcardRepository;
@@ -50,10 +55,13 @@ public class FlashcardPresenterTest {
     @Captor
     private ArgumentCaptor<FlashcardDataSource.GetFlashcardsCallback> mCallbackArgumentCaptor;
 
-    @Mock
-    private FlashcardContract.View mFlashcardView;
+    @Captor
+    private ArgumentCaptor<String> mFlashcardFrontCaptor;
 
-    private FlashcardPresenter mFlashcardPresenter;
+    @Mock
+    private RandomFlashcardContract.View mFlashcardView;
+
+    private RandomFlashcardPresenter mRandomFlashcardPresenter;
 
     @Before
     public void setup() {
@@ -64,9 +72,9 @@ public class FlashcardPresenterTest {
 
     @Test
     public void creation_setsPresenterOnView() {
-        mFlashcardPresenter = createPresenter();
+        mRandomFlashcardPresenter = createPresenter();
 
-        verify(mFlashcardView).setPresenter(mFlashcardPresenter);
+        verify(mFlashcardView).setPresenter(mRandomFlashcardPresenter);
     }
 
     @Test
@@ -77,19 +85,34 @@ public class FlashcardPresenterTest {
 
         //Trigger callback with list of Flashcards
         mCallbackArgumentCaptor.getValue().onFlashcardsLoaded(
-                addTestCardToListAndReturnList());
+                getSingleFlashcardList());
 
         inOrder.verify(mFlashcardView).setLoadingIndicator(false);
-        verify(mFlashcardView).showFlashcardSide(FLASHCARD.getFront());
+        verify(mFlashcardView).showFlashcardSide(FLASHCARD_1.getFront());
+    }
+
+    @Test
+    public void onLoadNewFlashcard_loadsDifferentFlashcard() {
+        createAndStartPresenterAndSetGetFlashcardsCallbackCaptor();
+        mCallbackArgumentCaptor.getValue().onFlashcardsLoaded(getFlashcardsList());
+        mRandomFlashcardPresenter.loadNewFlashcard();
+        verify(mFlashcardRepository, times(2))
+                .getFlashcards(mCallbackArgumentCaptor.capture());
+        mCallbackArgumentCaptor.getValue().onFlashcardsLoaded(getFlashcardsList());
+        verify(mFlashcardView, times(2))
+                .showFlashcardSide(mFlashcardFrontCaptor.capture());
+        String firstFlashcardFrontShown = mFlashcardFrontCaptor.getAllValues().get(0);
+        String secondFlashcardFrontShown = mFlashcardFrontCaptor.getAllValues().get(1);
+        assertNotEquals(firstFlashcardFrontShown, secondFlashcardFrontShown);
     }
 
     @Test
     public void turnFlashcard_showsBackInView() {
         createAndStartPresenterAndSetGetFlashcardsCallbackCaptor();
         mCallbackArgumentCaptor.getValue().onFlashcardsLoaded(
-                addTestCardToListAndReturnList());
-        mFlashcardPresenter.turnFlashcard();
-        verify(mFlashcardView).showFlashcardSide(FLASHCARD.getBack());
+                getSingleFlashcardList());
+        mRandomFlashcardPresenter.turnFlashcard();
+        verify(mFlashcardView).showFlashcardSide(FLASHCARD_1.getBack());
     }
 
     @Test
@@ -107,20 +130,27 @@ public class FlashcardPresenterTest {
     }
 
     private void createAndStartPresenterAndSetGetFlashcardsCallbackCaptor() {
-        mFlashcardPresenter = createPresenter();
-        mFlashcardPresenter.start();
+        mRandomFlashcardPresenter = createPresenter();
+        mRandomFlashcardPresenter.start();
         verify(mFlashcardRepository).getFlashcards(mCallbackArgumentCaptor.capture());
     }
 
-    private List<Flashcard> addTestCardToListAndReturnList() {
+    private List<Flashcard> getSingleFlashcardList() {
         List<Flashcard> cards = new ArrayList<>();
-        cards.add(FLASHCARD);
+        cards.add(FLASHCARD_1);
         return cards;
     }
 
-    private FlashcardPresenter createPresenter() {
+    private List<Flashcard> getFlashcardsList() {
+        List<Flashcard> cards = new ArrayList<>();
+        cards.add(FLASHCARD_1);
+        cards.add(FLASHCARD_2);
+        return cards;
+    }
+
+    private RandomFlashcardPresenter createPresenter() {
         UseCaseHandler useCaseHandler = new UseCaseHandler(new TestUseCaseScheduler());
         GetRandomFlashcard getRandomFlashCard = new GetRandomFlashcard(mFlashcardRepository);
-        return new FlashcardPresenter(useCaseHandler, mFlashcardView, getRandomFlashCard);
+        return new RandomFlashcardPresenter(useCaseHandler, mFlashcardView, getRandomFlashCard);
     }
 }

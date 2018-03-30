@@ -7,7 +7,7 @@ import android.support.test.runner.AndroidJUnit4;
 import com.gregspitz.flashcardapp.MainActivity;
 import com.gregspitz.flashcardapp.R;
 import com.gregspitz.flashcardapp.flashcardlist.FlashcardListActivity;
-import com.gregspitz.flashcardapp.randomflashcard.FlashcardActivity;
+import com.gregspitz.flashcardapp.randomflashcard.RandomFlashcardActivity;
 import com.gregspitz.flashcardapp.settings.SettingsActivity;
 
 import org.junit.Rule;
@@ -48,6 +48,6 @@ public class MainScreenTest {
     @Test
     public void playGameButtonClick_showsFlashcardActivity() {
         onView(withId(R.id.play_game_button)).perform(click());
-        intended(hasComponent(FlashcardActivity.class.getName()));
+        intended(hasComponent(RandomFlashcardActivity.class.getName()));
     }
 }

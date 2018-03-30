@@ -26,17 +26,17 @@ import com.gregspitz.flashcardapp.randomflashcard.domain.usecase.GetRandomFlashc
  * Presenter of flashcards
  */
 
-public class FlashcardPresenter implements FlashcardContract.Presenter {
+public class RandomFlashcardPresenter implements RandomFlashcardContract.Presenter {
 
     private final UseCaseHandler mUseCaseHandler;
-    private final FlashcardContract.View mView;
+    private final RandomFlashcardContract.View mView;
     private final GetRandomFlashcard mGetRandomFlashcard;
     private Flashcard mCurrentFlashcard;
     private boolean mShowingFront;
 
-    public FlashcardPresenter(@NonNull UseCaseHandler useCaseHandler,
-                              @NonNull FlashcardContract.View view,
-                              @NonNull GetRandomFlashcard getRandomFlashcard) {
+    public RandomFlashcardPresenter(@NonNull UseCaseHandler useCaseHandler,
+                                    @NonNull RandomFlashcardContract.View view,
+                                    @NonNull GetRandomFlashcard getRandomFlashcard) {
         mUseCaseHandler = useCaseHandler;
         mView = view;
         mGetRandomFlashcard = getRandomFlashcard;
@@ -62,7 +62,9 @@ public class FlashcardPresenter implements FlashcardContract.Presenter {
     public void loadNewFlashcard() {
         mView.setLoadingIndicator(true);
 
-        mUseCaseHandler.execute(mGetRandomFlashcard, new GetRandomFlashcard.RequestValues(),
+        String flashcardId = (mCurrentFlashcard == null) ? null : mCurrentFlashcard.getId();
+        mUseCaseHandler.execute(mGetRandomFlashcard,
+                new GetRandomFlashcard.RequestValues(flashcardId),
                 new UseCase.UseCaseCallback<GetRandomFlashcard.ResponseValue>() {
                     @Override
                     public void onSuccess(GetRandomFlashcard.ResponseValue response) {

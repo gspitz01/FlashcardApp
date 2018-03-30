@@ -25,10 +25,10 @@ import android.widget.ProgressBar;
 import com.gregspitz.flashcardapp.Injection;
 import com.gregspitz.flashcardapp.R;
 
-public class FlashcardActivity extends AppCompatActivity implements FlashcardContract.View {
+public class RandomFlashcardActivity extends AppCompatActivity implements RandomFlashcardContract.View {
 
     private FlashcardView mFlashcardView;
-    private FlashcardContract.Presenter mPresenter;
+    private RandomFlashcardContract.Presenter mPresenter;
     private ProgressBar mProgressBar;
 
     @Override
@@ -53,7 +53,7 @@ public class FlashcardActivity extends AppCompatActivity implements FlashcardCon
         });
 
         // Create presenter
-        new FlashcardPresenter(Injection.provideUseCaseHandler(),
+        new RandomFlashcardPresenter(Injection.provideUseCaseHandler(),
                 this, Injection.provideGetRandomFlashcard(getApplicationContext()));
     }
 
@@ -88,12 +88,12 @@ public class FlashcardActivity extends AppCompatActivity implements FlashcardCon
     }
 
     @Override
-    public void setPresenter(FlashcardContract.Presenter presenter) {
+    public void setPresenter(RandomFlashcardContract.Presenter presenter) {
         mPresenter = presenter;
     }
 
     @VisibleForTesting
-    public FlashcardContract.Presenter getPresenter() {
+    public RandomFlashcardContract.Presenter getPresenter() {
         return mPresenter;
     }
 }

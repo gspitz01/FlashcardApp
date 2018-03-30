@@ -36,13 +36,13 @@ import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
 
 /**
- * Tests for the implementation of {@link FlashcardActivity}
+ * Tests for the implementation of {@link RandomFlashcardActivity}
  */
 @RunWith(AndroidJUnit4.class)
 public class FlashcardScreenTest {
     @Rule
-    public ActivityTestRule<FlashcardActivity> mActivityTestRule =
-            new ActivityTestRule<>(FlashcardActivity.class, true, false);
+    public ActivityTestRule<RandomFlashcardActivity> mActivityTestRule =
+            new ActivityTestRule<>(RandomFlashcardActivity.class, true, false);
 
     /**
      * {@link Flashcard} stub that is added to the fake service layer

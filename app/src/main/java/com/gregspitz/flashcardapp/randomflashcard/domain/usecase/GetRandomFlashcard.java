@@ -38,14 +38,22 @@ public class GetRandomFlashcard extends UseCase<GetRandomFlashcard.RequestValues
     }
 
     @Override
-    protected void executeUseCase(RequestValues requestValues) {
+    protected void executeUseCase(final RequestValues requestValues) {
         mFlashcardRepository.getFlashcards(new FlashcardDataSource.GetFlashcardsCallback() {
             @Override
             public void onFlashcardsLoaded(List<Flashcard> flashcards) {
                 if (flashcards != null && flashcards.size() > 0) {
-                    int randInt = mRandom.nextInt(flashcards.size());
-                    getUseCaseCallback().onSuccess(
-                            new ResponseValue(flashcards.get(randInt)));
+                    if (flashcards.size() == 1) {
+                        getUseCaseCallback().onSuccess(new ResponseValue(flashcards.get(0)));
+                    } else {
+                        Flashcard toReturn;
+                        do {
+                            int index = mRandom.nextInt(flashcards.size());
+                            toReturn = flashcards.get(index);
+                        } while (toReturn.getId().equals(requestValues.getFlashcardId()));
+                        getUseCaseCallback().onSuccess(
+                                new ResponseValue(toReturn));
+                    }
                 } else {
                     getUseCaseCallback().onError();
                 }
@@ -58,7 +66,15 @@ public class GetRandomFlashcard extends UseCase<GetRandomFlashcard.RequestValues
         });
     }
 
-    public static final class RequestValues implements UseCase.RequestValues {}
+    public static final class RequestValues implements UseCase.RequestValues {
+        private String mFlashcardId;
+
+        public RequestValues(String flashcardId) {
+            mFlashcardId = flashcardId;
+        }
+
+        public String getFlashcardId() { return mFlashcardId; }
+    }
 
     public static final class ResponseValue implements UseCase.ResponseValue {
         private Flashcard mFlashcard;
