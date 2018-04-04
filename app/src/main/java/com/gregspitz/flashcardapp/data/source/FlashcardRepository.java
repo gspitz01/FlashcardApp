@@ -17,6 +17,7 @@ package com.gregspitz.flashcardapp.data.source;
 
 import android.support.annotation.NonNull;
 import android.support.annotation.VisibleForTesting;
+import android.util.Log;
 
 import com.gregspitz.flashcardapp.data.model.Flashcard;
 

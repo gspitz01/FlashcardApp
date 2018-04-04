@@ -81,4 +81,10 @@ public class FakeFlashcardLocalDataSource implements FlashcardDataSource {
     public void refreshFlashcards() {
         // Not needed, handled by FlashcardRepository
     }
+
+    public void addFlashcards(Flashcard... flashcards) {
+        for (Flashcard flashcard : flashcards) {
+            mDatabase.put(flashcard.getId(), flashcard);
+        }
+    }
 }

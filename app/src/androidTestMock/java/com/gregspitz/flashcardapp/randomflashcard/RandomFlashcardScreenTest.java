@@ -16,15 +16,18 @@
 package com.gregspitz.flashcardapp.randomflashcard;
 
 import android.content.Intent;
+import android.support.test.InstrumentationRegistry;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 
 import com.gregspitz.flashcardapp.R;
+import com.gregspitz.flashcardapp.data.source.local.FakeFlashcardLocalDataSource;
 import com.gregspitz.flashcardapp.data.source.remote.FakeFlashcardRemoteDataSource;
 import com.gregspitz.flashcardapp.data.source.FlashcardRepository;
 import com.gregspitz.flashcardapp.data.model.Flashcard;
 
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -39,7 +42,7 @@ import static android.support.test.espresso.matcher.ViewMatchers.withText;
  * Tests for the implementation of {@link RandomFlashcardActivity}
  */
 @RunWith(AndroidJUnit4.class)
-public class FlashcardScreenTest {
+public class RandomFlashcardScreenTest {
     @Rule
     public ActivityTestRule<RandomFlashcardActivity> mActivityTestRule =
             new ActivityTestRule<>(RandomFlashcardActivity.class, true, false);
@@ -55,6 +58,8 @@ public class FlashcardScreenTest {
     public void setup() {
         FlashcardRepository.destroyInstance();
         FakeFlashcardRemoteDataSource.getInstance().addFlashcards(FLASHCARD);
+        FakeFlashcardLocalDataSource.getInstance(InstrumentationRegistry.getTargetContext())
+                .addFlashcards(FLASHCARD);
     }
 
     @Test
@@ -70,6 +75,7 @@ public class FlashcardScreenTest {
         onView(withId(R.id.flashcard_view)).check(matches(withText(FLASHCARD.getBack())));
     }
 
+    @Ignore
     @Test
     public void nextCardButtonClick_loadsNewCard() {
         // TODO: figure out how to do this
