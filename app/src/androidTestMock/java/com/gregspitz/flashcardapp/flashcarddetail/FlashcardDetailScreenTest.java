@@ -73,7 +73,7 @@ public class FlashcardDetailScreenTest {
     @Test
     public void clickEditFlashcard_showsEditFlashcardActivity() {
         createIntentAndLaunchActivity();
-        onView(withId(R.id.edit_flashcard_button)).perform(click());
+        onView(withId(R.id.edit_flashcard_fab)).perform(click());
         intended(allOf(hasComponent(AddEditFlashcardActivity.class.getName()),
                 hasExtra(AddEditFlashcardActivity.FLASHCARD_ID_EXTRA, FLASHCARD_1.getId())));
     }
