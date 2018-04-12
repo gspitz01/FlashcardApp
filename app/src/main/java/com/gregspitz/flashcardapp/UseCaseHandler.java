@@ -77,9 +77,9 @@ public class UseCaseHandler {
         }
     }
 
-    public static UseCaseHandler getInstance() {
+    public static UseCaseHandler getInstance(UseCaseScheduler scheduler) {
         if (INSTANCE == null) {
-            INSTANCE = new UseCaseHandler(new UseCaseThreadPoolScheduler());
+            INSTANCE = new UseCaseHandler(scheduler);
         }
         return INSTANCE;
     }

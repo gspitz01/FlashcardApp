@@ -38,16 +38,15 @@ public class FakeFlashcardLocalDataSource implements FlashcardDataSource {
 
     /**
      * Constructor, private to avoid instantiation
-     * @param context included for consistency with the real version
      */
     @VisibleForTesting
-    public FakeFlashcardLocalDataSource(@NonNull Context context) {
+    public FakeFlashcardLocalDataSource() {
         mDatabase = new HashMap<>();
     }
 
-    public static FakeFlashcardLocalDataSource getInstance(@NonNull Context context) {
+    public static FakeFlashcardLocalDataSource getInstance() {
         if (INSTANCE == null) {
-            INSTANCE = new FakeFlashcardLocalDataSource(context);
+            INSTANCE = new FakeFlashcardLocalDataSource();
         }
         return INSTANCE;
     }

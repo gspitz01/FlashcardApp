@@ -10,8 +10,6 @@ import android.widget.Button;
 import android.widget.ProgressBar;
 
 import com.gregspitz.flashcardapp.R;
-import com.gregspitz.flashcardapp.randomflashcard.FlashcardView;
-import com.gregspitz.flashcardapp.randomflashcard.RandomFlashcardContract;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -57,8 +55,8 @@ public class RandomFlashcardFragment extends Fragment implements RandomFlashcard
     @Override
     public void onResume() {
         super.onResume();
-        mPresenter.start();
         mActive = true;
+        mPresenter.start();
     }
 
     @Override

@@ -34,14 +34,25 @@ import com.gregspitz.flashcardapp.flashcardlist.domain.usecase.GetFlashcards;
  */
 
 public class Injection {
+
+    private static UseCaseScheduler sScheduler = new UseCaseThreadPoolScheduler();
+
     public static FlashcardRepository provideFlashcardRepository(@NonNull Context context) {
         return FlashcardRepository.getInstance(
-                FakeFlashcardLocalDataSource.getInstance(context),
+                FakeFlashcardLocalDataSource.getInstance(),
                 FakeFlashcardRemoteDataSource.getInstance());
     }
 
+    private static UseCaseScheduler provideScheduler() {
+        return sScheduler;
+    }
+
+    public static void setScheduler(UseCaseScheduler useCaseScheduler) {
+        sScheduler = useCaseScheduler;
+    }
+
     public static UseCaseHandler provideUseCaseHandler() {
-        return UseCaseHandler.getInstance();
+        return UseCaseHandler.getInstance(provideScheduler());
     }
 
     public static GetRandomFlashcard provideGetRandomFlashcard(@NonNull Context context) {

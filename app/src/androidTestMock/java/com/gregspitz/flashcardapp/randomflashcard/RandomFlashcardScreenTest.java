@@ -58,7 +58,7 @@ public class RandomFlashcardScreenTest {
     public void setup() {
         FlashcardRepository.destroyInstance();
         FakeFlashcardRemoteDataSource.getInstance().addFlashcards(FLASHCARD);
-        FakeFlashcardLocalDataSource.getInstance(InstrumentationRegistry.getTargetContext())
+        FakeFlashcardLocalDataSource.getInstance()
                 .addFlashcards(FLASHCARD);
     }
 
