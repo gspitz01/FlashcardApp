@@ -21,6 +21,7 @@ import android.support.test.runner.AndroidJUnit4;
 
 import com.gregspitz.flashcardapp.R;
 import com.gregspitz.flashcardapp.addeditflashcard.AddEditFlashcardActivity;
+import com.gregspitz.flashcardapp.data.source.local.FakeFlashcardLocalDataSource;
 import com.gregspitz.flashcardapp.data.source.remote.FakeFlashcardRemoteDataSource;
 import com.gregspitz.flashcardapp.data.source.FlashcardRepository;
 import com.gregspitz.flashcardapp.data.model.Flashcard;
@@ -60,6 +61,9 @@ public class FlashcardDetailScreenTest {
     @Before
     public void setup() {
         FlashcardRepository.destroyInstance();
+        FakeFlashcardLocalDataSource.getInstance().deleteAllFlashcards();
+        FakeFlashcardRemoteDataSource.getInstance().deleteAllFlashcards();
+        FakeFlashcardLocalDataSource.getInstance().addFlashcards(FLASHCARD_1, FLASHCARD_2);
         FakeFlashcardRemoteDataSource.getInstance().addFlashcards(FLASHCARD_1, FLASHCARD_2);
     }
 
@@ -80,7 +84,8 @@ public class FlashcardDetailScreenTest {
 
     @Test
     public void noAvailableFlashcard_showsFlashcardNotAvailableText() {
-        FakeFlashcardRemoteDataSource.getInstance().clearFlashcards();
+        FakeFlashcardRemoteDataSource.getInstance().deleteAllFlashcards();
+        FakeFlashcardLocalDataSource.getInstance().deleteAllFlashcards();
         createIntentAndLaunchActivity();
         onView(withId(R.id.flashcard_front))
                 .check(matches(withText(R.string.no_flashcards_to_show_text)));

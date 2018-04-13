@@ -55,8 +55,8 @@ public class FlashcardDetailFragment extends Fragment
     @Override
     public void onResume() {
         super.onResume();
-        mPresenter.start();
         mActive = true;
+        mPresenter.start();
     }
 
     @Override
