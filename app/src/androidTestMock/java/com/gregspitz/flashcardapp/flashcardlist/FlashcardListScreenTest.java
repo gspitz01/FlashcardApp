@@ -25,6 +25,7 @@ import android.view.View;
 
 import com.gregspitz.flashcardapp.R;
 import com.gregspitz.flashcardapp.addeditflashcard.AddEditFlashcardActivity;
+import com.gregspitz.flashcardapp.data.source.local.FakeFlashcardLocalDataSource;
 import com.gregspitz.flashcardapp.data.source.remote.FakeFlashcardRemoteDataSource;
 import com.gregspitz.flashcardapp.data.source.FlashcardRepository;
 import com.gregspitz.flashcardapp.flashcarddetail.FlashcardDetailActivity;
@@ -86,7 +87,8 @@ public class FlashcardListScreenTest {
 
     @Test
     public void noFlashcardsToShow_shouldShowNoFlashcardMessage() {
-        FakeFlashcardRemoteDataSource.getInstance().clearFlashcards();
+        FakeFlashcardLocalDataSource.getInstance().deleteAllFlashcards();
+        FakeFlashcardRemoteDataSource.getInstance().deleteAllFlashcards();
         createIntentAndLaunchActivity();
         onView(withId(R.id.no_flashcards_to_show)).check(matches(isDisplayed()));
     }

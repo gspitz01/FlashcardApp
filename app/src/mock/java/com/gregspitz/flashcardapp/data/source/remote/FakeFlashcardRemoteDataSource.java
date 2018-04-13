@@ -39,7 +39,7 @@ public class FakeFlashcardRemoteDataSource implements FlashcardDataSource {
 
     // prevent direct instantiation
     @VisibleForTesting
-    public FakeFlashcardRemoteDataSource() {}
+    private FakeFlashcardRemoteDataSource() {}
 
     public static FakeFlashcardRemoteDataSource getInstance() {
         if (INSTANCE == null) {
@@ -77,7 +77,7 @@ public class FakeFlashcardRemoteDataSource implements FlashcardDataSource {
 
     @Override
     public void deleteAllFlashcards() {
-        // Don't need this
+        FLASHCARD_SERVICE_DATA.clear();
     }
 
     @Override
@@ -89,9 +89,5 @@ public class FakeFlashcardRemoteDataSource implements FlashcardDataSource {
         for (Flashcard flashcard : flashcards) {
             FLASHCARD_SERVICE_DATA.put(flashcard.getId(), flashcard);
         }
-    }
-
-    public void clearFlashcards() {
-        FLASHCARD_SERVICE_DATA.clear();
     }
 }
