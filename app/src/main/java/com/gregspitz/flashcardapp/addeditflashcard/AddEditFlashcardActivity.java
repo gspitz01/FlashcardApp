@@ -40,6 +40,8 @@ public class AddEditFlashcardActivity extends AppCompatActivity
     private Button mSaveFlashcardButton;
     private Flashcard mFlashcard;
 
+    private boolean mActive = false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -57,7 +59,14 @@ public class AddEditFlashcardActivity extends AppCompatActivity
     @Override
     protected void onResume() {
         super.onResume();
+        mActive = true;
         mPresenter.start();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        mActive = false;
     }
 
     @Override
@@ -118,6 +127,6 @@ public class AddEditFlashcardActivity extends AppCompatActivity
 
     @Override
     public boolean isActive() {
-        return true;
+        return mActive;
     }
 }
