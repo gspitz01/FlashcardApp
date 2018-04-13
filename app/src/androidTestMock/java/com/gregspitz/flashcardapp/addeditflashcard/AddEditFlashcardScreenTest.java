@@ -23,6 +23,7 @@ import com.gregspitz.flashcardapp.R;
 import com.gregspitz.flashcardapp.data.model.Flashcard;
 import com.gregspitz.flashcardapp.data.source.FlashcardDataSource;
 import com.gregspitz.flashcardapp.data.source.FlashcardRepository;
+import com.gregspitz.flashcardapp.data.source.local.FakeFlashcardLocalDataSource;
 import com.gregspitz.flashcardapp.data.source.remote.FakeFlashcardRemoteDataSource;
 import com.gregspitz.flashcardapp.flashcardlist.FlashcardListActivity;
 
@@ -72,6 +73,9 @@ public class AddEditFlashcardScreenTest {
     @Before
     public void setup() {
         FlashcardRepository.destroyInstance();
+        FakeFlashcardLocalDataSource.getInstance().deleteAllFlashcards();
+        FakeFlashcardRemoteDataSource.getInstance().deleteAllFlashcards();
+        FakeFlashcardLocalDataSource.getInstance().addFlashcards(FLASHCARD_1, FLASHCARD_2);
         FakeFlashcardRemoteDataSource.getInstance().addFlashcards(FLASHCARD_1, FLASHCARD_2);
     }
 
