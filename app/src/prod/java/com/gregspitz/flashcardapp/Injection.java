@@ -37,13 +37,13 @@ public class Injection {
                 RetrofitRemoteFlashcardDataSource.getInstance());
     }
 
-    public static RoomLocalFlashcardDataSource provideRoomLocalFlashcardDataSource(
+    private static RoomLocalFlashcardDataSource provideRoomLocalFlashcardDataSource(
             @NonNull Context context) {
         return RoomLocalFlashcardDataSource.getInstance(context);
     }
 
     public static UseCaseHandler provideUseCaseHandler() {
-        return UseCaseHandler.getInstance();
+        return UseCaseHandler.getInstance(new UseCaseThreadPoolScheduler());
     }
 
     public static GetRandomFlashcard provideGetRandomFlashcard(@NonNull Context context) {
